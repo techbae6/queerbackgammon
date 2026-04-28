@@ -25,21 +25,34 @@
       filter: saturate(1.4);
       pointer-events: none;
       z-index: 0;
+      animation: breathe 9s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        opacity: 0.055;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        opacity: 0.095;
+        transform: translate(-50%, -50%) scale(1.035);
+      }
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
       font-size: 80px;
       line-height: 0.9;
       margin-bottom: 30px;
-      position: relative;
-      z-index: 1;
     }
 
     p {
       margin: 6px 0;
       font-size: 16px;
-      position: relative;
-      z-index: 1;
     }
 
     a {
@@ -47,12 +60,30 @@
       text-decoration: underline;
     }
 
+    a:hover {
+      opacity: 0.65;
+    }
+
     .sections {
       margin-top: 80px;
       display: flex;
       gap: 120px;
-      position: relative;
-      z-index: 1;
+    }
+
+    .section {
+      opacity: 0;
+      animation: fadeIn 1.4s ease forwards;
+    }
+
+    .section:nth-child(2) {
+      margin-top: 10px;
+      animation-delay: 0.18s;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
 
     .section-title {
@@ -60,6 +91,19 @@
       letter-spacing: 1px;
       margin-bottom: 20px;
       opacity: 0.7;
+      text-transform: uppercase;
+    }
+
+    .title-alt {
+      display: none;
+    }
+
+    .section:hover .title-main {
+      display: none;
+    }
+
+    .section:hover .title-alt {
+      display: inline;
     }
 
     .item {
@@ -72,8 +116,6 @@
 
     .bottom {
       margin-top: 80px;
-      position: relative;
-      z-index: 1;
     }
 
     input {
@@ -84,6 +126,7 @@
       padding: 6px;
       margin-right: 10px;
       width: 200px;
+      outline: none;
     }
 
     input::placeholder {
@@ -108,59 +151,145 @@
       margin-top: 80px;
       font-size: 12px;
       opacity: 0.6;
-      position: relative;
-      z-index: 1;
+    }
+
+    .easter-egg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #002FA7;
+      color: #f5f5f5;
+      z-index: 10;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: clamp(38px, 8vw, 92px);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+      cursor: pointer;
+    }
+
+    .easter-egg.active {
+      display: flex;
+    }
+
+    .logo-click-zone {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: min(80vw, 700px);
+      height: min(80vw, 700px);
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 28px;
+      }
+
+      h1 {
+        font-size: 58px;
+      }
+
+      .sections {
+        flex-direction: column;
+        gap: 42px;
+      }
+
+      .section:nth-child(2) {
+        margin-top: 0;
+      }
+
+      .logo {
+        width: 110vw;
+      }
+
+      .logo-click-zone {
+        width: 100vw;
+        height: 100vw;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <img src="logo.png" class="logo" />
+  <img src="logo.png" class="logo" alt="">
 
-  <h1>queer<br>backgammon</h1>
+  <div class="logo-click-zone" onclick="toggleEgg()"></div>
 
-  <p>a little bit of play, a little bit of culture</p>
-  <p>(mostly) brooklyn + (sometimes) los angeles</p>
-  <p><a href="https://instagram.com/YOURHANDLE">instagram</a></p>
-
-  <div class="sections">
+  <div class="easter-egg" id="egg" onclick="toggleEgg()">
     <div>
-      <div class="section-title">future events</div>
+      you sit<br>
+      you play<br>
+      you stay
+    </div>
+  </div>
 
-      <div class="item">
-        may 09, saturday, bushwick -
-        <a href="#">ig post</a>
+  <main class="content">
+    <h1>queer<br>backgammon</h1>
+
+    <p>a little bit of play, a little bit of culture</p>
+    <p>(mostly) brooklyn + (sometimes) los angeles</p>
+    <p><a href="https://instagram.com/queerbackgammon">instagram</a></p>
+
+    <div class="sections">
+      <div class="section">
+        <div class="section-title">
+          <span class="title-main">future events</span>
+          <span class="title-alt">gatherings</span>
+        </div>
+
+        <div class="item">
+          may 09, saturday, bushwick -
+          <a href="#">ig post</a>
+        </div>
+
+        <div class="item muted">more dates soon</div>
       </div>
 
-      <div class="item muted">more dates soon</div>
+      <div class="section">
+        <div class="section-title">
+          <span class="title-main">objects for play</span>
+          <span class="title-alt">objects</span>
+        </div>
+
+        <div class="item">bandana <span class="muted">coming soon</span></div>
+        <div class="item">t-shirt <span class="muted">coming soon</span></div>
+        <div class="item">tote <span class="muted">coming soon</span></div>
+      </div>
     </div>
 
-    <div>
-      <div class="section-title">objects for play</div>
+    <div class="bottom">
+      <form>
+        <input type="email" placeholder="your email">
+        <button type="submit">subscribe</button>
+      </form>
 
-      <div class="item">bandana <span class="muted">coming soon</span></div>
-      <div class="item">t-shirt <span class="muted">coming soon</span></div>
-      <div class="item">tote <span class="muted">coming soon</span></div>
-    </div>
-  </div>
+      <div class="subnote">
+        events, merch, volunteer calls
+      </div>
 
-  <div class="bottom">
-    <form>
-      <input type="email" placeholder="your email">
-      <button type="submit">subscribe</button>
-    </form>
-
-    <div class="subnote">
-      events, merch, and updates
+      <p style="margin-top: 20px;">
+        <a href="mailto:hello@queerbackgammon.com">contact</a>
+      </p>
     </div>
 
-    <p style="margin-top: 20px;">
-      <a href="mailto:hello@queerbackgammon.com">contact</a>
-    </p>
-  </div>
+    <footer>
+      est. nyc - roll: <span id="roll"></span>
+    </footer>
+  </main>
 
-  <footer>est. nyc</footer>
+  <script>
+    const roll = Math.floor(Math.random() * 6) + 1;
+    document.getElementById("roll").textContent = roll;
+
+    function toggleEgg() {
+      document.getElementById("egg").classList.toggle("active");
+    }
+  </script>
 
 </body>
 </html>
