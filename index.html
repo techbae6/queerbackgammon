@@ -5,241 +5,146 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
-    :root {
-      --blue: #002FA7;
-      --blue-dark: #001f8f;
-      --white: #f6f3ee;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
-      min-height: 100vh;
-      background: var(--blue);
-      color: var(--white);
-      font-family: Arial, Helvetica, sans-serif;
-      padding: 32px;
+      background: #002FA7;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      position: relative;
       overflow-x: hidden;
     }
 
-    .logo-bg {
-      position: fixed;
-      inset: auto -8vw 8vh auto;
-      width: min(80vw, 760px);
-      opacity: 0.28;
-      z-index: 0;
-      pointer-events: none;
+    .logo {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 70vw;
+      opacity: 0.08;
       filter: saturate(1.4);
-    }
-
-    main {
-      position: relative;
-      z-index: 1;
-      max-width: 980px;
-      min-height: calc(100vh - 64px);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    header {
-      padding-top: 7vh;
-      max-width: 680px;
+      pointer-events: none;
     }
 
     h1 {
-      font-size: clamp(52px, 11vw, 132px);
-      line-height: 0.86;
-      letter-spacing: -0.075em;
-      margin: 0 0 32px;
-      font-weight: 700;
+      font-size: 80px;
+      line-height: 0.9;
+      margin-bottom: 30px;
     }
 
     p {
-      margin: 0 0 12px;
-      font-size: 17px;
-      line-height: 1.45;
+      margin: 6px 0;
+      font-size: 16px;
     }
 
     a {
-      color: var(--white);
-      text-decoration: none;
-      border-bottom: 1px solid currentColor;
-    }
-
-    a:hover {
-      opacity: 0.65;
+      color: #f5f5f5;
+      text-decoration: underline;
     }
 
     .sections {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 56px;
-      margin: 84px 0 56px;
-      max-width: 760px;
-    }
-
-    section {
-      border-top: 1px solid rgba(246, 243, 238, 0.55);
-      padding-top: 18px;
-    }
-
-    h2 {
-      font-size: 14px;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin: 0 0 24px;
-    }
-
-    .item {
-      font-size: 16px;
-      line-height: 1.45;
-      margin-bottom: 18px;
-    }
-
-    .muted {
-      opacity: 0.68;
-    }
-
-    .subscribe {
-      border-top: 1px solid rgba(246, 243, 238, 0.55);
-      padding-top: 24px;
-      max-width: 760px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 56px;
-      margin-bottom: 64px;
-    }
-
-    form {
+      margin-top: 80px;
       display: flex;
-      border: 1px solid rgba(246, 243, 238, 0.75);
-      max-width: 420px;
-      height: 46px;
+      gap: 120px;
     }
 
-    input {
-      flex: 1;
-      background: transparent;
-      border: 0;
-      color: var(--white);
-      padding: 0 14px;
-      font-size: 15px;
-      outline: none;
-    }
-
-    input::placeholder {
-      color: rgba(246, 243, 238, 0.65);
-    }
-
-    button {
-      background: transparent;
-      border: 0;
-      border-left: 1px solid rgba(246, 243, 238, 0.75);
-      color: var(--white);
-      padding: 0 16px;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      opacity: 0.65;
-    }
-
-    footer {
-      font-size: 13px;
+    .section-title {
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
       opacity: 0.7;
     }
 
-    @media (max-width: 700px) {
-      body {
-        padding: 24px;
-      }
+    .item {
+      margin-bottom: 12px;
+    }
 
-      main {
-        min-height: calc(100vh - 48px);
-      }
+    .muted {
+      opacity: 0.5;
+    }
 
-      .logo-bg {
-        width: 115vw;
-        right: -42vw;
-        bottom: 18vh;
-        opacity: 0.22;
-      }
+    .bottom {
+      margin-top: 80px;
+    }
 
-      .sections,
-      .subscribe {
-        grid-template-columns: 1fr;
-        gap: 36px;
-      }
+    input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #f5f5f5;
+      color: white;
+      padding: 6px;
+      margin-right: 10px;
+      width: 200px;
+    }
 
-      header {
-        padding-top: 5vh;
-      }
+    input::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: white;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 80px;
+      font-size: 12px;
+      opacity: 0.6;
     }
   </style>
 </head>
 
 <body>
-  <img class="logo-bg" src="logo.png" alt="" />
 
-  <main>
+  <img src="logo.png" class="logo" />
+
+  <h1>queer<br>backgammon</h1>
+
+  <p>a little bit of play, a little bit of culture</p>
+  <p>(mostly) brooklyn + (sometimes) los angeles</p>
+  <p><a href="https://instagram.com/YOURHANDLE">instagram</a></p>
+
+  <div class="sections">
     <div>
-      <header>
-        <h1>queer backgammon</h1>
+      <div class="section-title">future events</div>
 
-        <p>a little bit of play, a little bit of culture</p>
-        <p>(mostly) brooklyn + (sometimes) los angeles</p>
-        <p><a href="https://instagram.com/YOURHANDLE">instagram</a></p>
-      </header>
-
-      <div class="sections">
-        <section>
-          <h2>upcoming dates</h2>
-
-          <div class="item">
-            may 09, saturday<br>
-            bushwick, boyfriend co-op<br>
-            <a href="#">view on instagram</a>
-          </div>
-
-          <div class="item muted">more dates soon</div>
-        </section>
-
-        <section>
-          <h2>objects for play</h2>
-
-          <div class="item">bandana</div>
-          <div class="item">t-shirt</div>
-          <div class="item">tote</div>
-          <div class="item muted">coming soon</div>
-        </section>
+      <div class="item">
+        may 09, saturday, bushwick -
+        <a href="#">ig post</a>
       </div>
 
-      <div class="subscribe">
-        <section>
-          <h2>stay in the loop</h2>
-          <p>upcoming dates, merch drops, volunteer calls, and other good news.</p>
-
-          <form action="#" method="post">
-            <input type="email" name="email" placeholder="your email" required>
-            <button type="submit">subscribe</button>
-          </form>
-        </section>
-
-        <section>
-          <h2>be part of it</h2>
-          <p>questions, ideas, feedback, collaborations, or volunteering.</p>
-          <p><a href="mailto:hello@queerbackgammon.com">hello@queerbackgammon.com</a></p>
-        </section>
-      </div>
+      <div class="item muted">more dates soon</div>
     </div>
 
-    <footer>est. nyc</footer>
-  </main>
+    <div>
+      <div class="section-title">objects for play</div>
+
+      <div class="item">bandana <span class="muted">coming soon</span></div>
+      <div class="item">t-shirt <span class="muted">coming soon</span></div>
+      <div class="item">tote <span class="muted">coming soon</span></div>
+
+      <div class="item">
+        <a href="mailto:hello@queerbackgammon.com">inquire / collaborate</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <p>stay in the loop</p>
+
+    <form>
+      <input type="email" placeholder="your email">
+      <button type="submit">subscribe</button>
+    </form>
+
+    <p class="muted">
+      events, merch, and occasional calls for volunteers
+    </p>
+  </div>
+
+  <footer>est. nyc</footer>
+
 </body>
 </html>
