@@ -7,7 +7,8 @@
   <style>
     :root {
       --blue: #002FA7;
-      --white: #F5F5F5;
+      --blue-dark: #001f8f;
+      --white: #f6f3ee;
     }
 
     * {
@@ -16,163 +17,229 @@
 
     body {
       margin: 0;
+      min-height: 100vh;
       background: var(--blue);
       color: var(--white);
       font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
       padding: 32px;
+      overflow-x: hidden;
     }
 
-    .page {
+    .logo-bg {
+      position: fixed;
+      inset: auto -8vw 8vh auto;
+      width: min(80vw, 760px);
+      opacity: 0.28;
+      z-index: 0;
+      pointer-events: none;
+      filter: saturate(1.4);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
       min-height: calc(100vh - 64px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      max-width: 720px;
     }
 
     header {
-      padding-top: 8vh;
+      padding-top: 7vh;
+      max-width: 680px;
     }
 
     h1 {
-      font-size: clamp(42px, 10vw, 110px);
-      line-height: 0.9;
-      letter-spacing: -0.06em;
+      font-size: clamp(52px, 11vw, 132px);
+      line-height: 0.86;
+      letter-spacing: -0.075em;
+      margin: 0 0 32px;
       font-weight: 700;
-      margin: 0 0 28px;
-      max-width: 640px;
     }
 
     p {
-      font-size: 16px;
-      line-height: 1.5;
-      margin: 0 0 14px;
+      margin: 0 0 12px;
+      font-size: 17px;
+      line-height: 1.45;
     }
 
     a {
       color: var(--white);
       text-decoration: none;
-      border-bottom: 1px solid var(--white);
+      border-bottom: 1px solid currentColor;
     }
 
     a:hover {
       opacity: 0.65;
     }
 
-    .intro {
-      max-width: 420px;
-    }
-
     .sections {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      margin-top: 72px;
-      margin-bottom: 48px;
+      gap: 56px;
+      margin: 84px 0 56px;
+      max-width: 760px;
+    }
+
+    section {
+      border-top: 1px solid rgba(246, 243, 238, 0.55);
+      padding-top: 18px;
     }
 
     h2 {
-      font-size: 13px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      font-size: 14px;
       font-weight: 400;
-      margin: 0 0 18px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0 0 24px;
     }
 
     .item {
-      margin-bottom: 12px;
-      font-size: 15px;
-      line-height: 1.4;
+      font-size: 16px;
+      line-height: 1.45;
+      margin-bottom: 18px;
     }
 
     .muted {
       opacity: 0.68;
     }
 
-    footer {
-      font-size: 12px;
+    .subscribe {
+      border-top: 1px solid rgba(246, 243, 238, 0.55);
+      padding-top: 24px;
+      max-width: 760px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      margin-bottom: 64px;
+    }
+
+    form {
+      display: flex;
+      border: 1px solid rgba(246, 243, 238, 0.75);
+      max-width: 420px;
+      height: 46px;
+    }
+
+    input {
+      flex: 1;
+      background: transparent;
+      border: 0;
+      color: var(--white);
+      padding: 0 14px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: rgba(246, 243, 238, 0.65);
+    }
+
+    button {
+      background: transparent;
+      border: 0;
+      border-left: 1px solid rgba(246, 243, 238, 0.75);
+      color: var(--white);
+      padding: 0 16px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button:hover {
       opacity: 0.65;
     }
 
-    @media (max-width: 640px) {
+    footer {
+      font-size: 13px;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 700px) {
       body {
         padding: 24px;
       }
 
-      .page {
+      main {
         min-height: calc(100vh - 48px);
+      }
+
+      .logo-bg {
+        width: 115vw;
+        right: -42vw;
+        bottom: 18vh;
+        opacity: 0.22;
+      }
+
+      .sections,
+      .subscribe {
+        grid-template-columns: 1fr;
+        gap: 36px;
       }
 
       header {
         padding-top: 5vh;
-      }
-
-      .sections {
-        grid-template-columns: 1fr;
-        gap: 36px;
-        margin-top: 56px;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="page">
+  <img class="logo-bg" src="logo.png" alt="" />
 
+  <main>
     <div>
       <header>
         <h1>queer backgammon</h1>
 
-        <div class="intro">
-          <p>a little bit of play, a little bit of culture</p>
-          <p>(mostly) brooklyn + (sometimes) los angeles</p>
-          <p><a href="https://instagram.com/YOURHANDLE">instagram</a></p>
-        </div>
+        <p>a little bit of play, a little bit of culture</p>
+        <p>(mostly) brooklyn + (sometimes) los angeles</p>
+        <p><a href="https://instagram.com/YOURHANDLE">instagram</a></p>
       </header>
 
-      <section class="sections">
-
-        <div>
-          <h2>future events</h2>
+      <div class="sections">
+        <section>
+          <h2>upcoming dates</h2>
 
           <div class="item">
-            may 09, saturday, bushwick - boyfriend co-op -
-            <a href="#">ig post</a>
+            may 09, saturday<br>
+            bushwick, boyfriend co-op<br>
+            <a href="#">view on instagram</a>
           </div>
 
-          <div class="item muted">
-            more dates soon
-          </div>
-        </div>
+          <div class="item muted">more dates soon</div>
+        </section>
 
-        <div>
+        <section>
           <h2>objects for play</h2>
 
-          <div class="item">
-            bandana <span class="muted">coming soon</span>
-          </div>
+          <div class="item">bandana</div>
+          <div class="item">t-shirt</div>
+          <div class="item">tote</div>
+          <div class="item muted">coming soon</div>
+        </section>
+      </div>
 
-          <div class="item">
-            t-shirt <span class="muted">coming soon</span>
-          </div>
+      <div class="subscribe">
+        <section>
+          <h2>stay in the loop</h2>
+          <p>upcoming dates, merch drops, volunteer calls, and other good news.</p>
 
-          <div class="item">
-            tote <span class="muted">coming soon</span>
-          </div>
+          <form action="#" method="post">
+            <input type="email" name="email" placeholder="your email" required>
+            <button type="submit">subscribe</button>
+          </form>
+        </section>
 
-          <div class="item">
-            <a href="mailto:hello@queerbackgammon.com">inquire</a>
-          </div>
-        </div>
-
-      </section>
+        <section>
+          <h2>be part of it</h2>
+          <p>questions, ideas, feedback, collaborations, or volunteering.</p>
+          <p><a href="mailto:hello@queerbackgammon.com">hello@queerbackgammon.com</a></p>
+        </section>
+      </div>
     </div>
 
-    <footer>
-      est. nyc
-    </footer>
-
+    <footer>est. nyc</footer>
   </main>
 </body>
 </html>
