@@ -3,12 +3,176 @@
 <head>
   <title>queer backgammon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-</head>
-<body style="font-family: sans-serif; text-align:center; padding:40px;">
-  <h1>queer backgammon</h1>
-  <p>a little bit of play, a little bit of culture</p>
-  <p>(mostly) brooklyn + (sometimes) los angeles</p>
 
-  <a href="https://instagram.com/queerbackgammon">instagram</a>
+  <style>
+    :root {
+      --blue: #002FA7;
+      --white: #F5F5F5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--blue);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      padding: 32px;
+    }
+
+    .page {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      max-width: 720px;
+    }
+
+    header {
+      padding-top: 8vh;
+    }
+
+    h1 {
+      font-size: clamp(42px, 10vw, 110px);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      margin: 0 0 28px;
+      max-width: 640px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0 0 14px;
+    }
+
+    a {
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid var(--white);
+    }
+
+    a:hover {
+      opacity: 0.65;
+    }
+
+    .intro {
+      max-width: 420px;
+    }
+
+    .sections {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 72px;
+      margin-bottom: 48px;
+    }
+
+    h2 {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 400;
+      margin: 0 0 18px;
+    }
+
+    .item {
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .muted {
+      opacity: 0.68;
+    }
+
+    footer {
+      font-size: 12px;
+      opacity: 0.65;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 24px;
+      }
+
+      .page {
+        min-height: calc(100vh - 48px);
+      }
+
+      header {
+        padding-top: 5vh;
+      }
+
+      .sections {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        margin-top: 56px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <div>
+      <header>
+        <h1>queer backgammon</h1>
+
+        <div class="intro">
+          <p>a little bit of play, a little bit of culture</p>
+          <p>(mostly) brooklyn + (sometimes) los angeles</p>
+          <p><a href="https://instagram.com/YOURHANDLE">instagram</a></p>
+        </div>
+      </header>
+
+      <section class="sections">
+
+        <div>
+          <h2>future events</h2>
+
+          <div class="item">
+            date, day of week, city -
+            <a href="#">ig post</a>
+          </div>
+
+          <div class="item muted">
+            more dates soon
+          </div>
+        </div>
+
+        <div>
+          <h2>objects for play</h2>
+
+          <div class="item">
+            bandana <span class="muted">coming soon</span>
+          </div>
+
+          <div class="item">
+            t-shirt <span class="muted">coming soon</span>
+          </div>
+
+          <div class="item">
+            tote <span class="muted">coming soon</span>
+          </div>
+
+          <div class="item">
+            <a href="mailto:hello@queerbackgammon.com">inquire</a>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <footer>
+      est. nyc
+    </footer>
+
+  </main>
 </body>
 </html>
