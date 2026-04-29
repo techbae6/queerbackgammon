@@ -318,7 +318,7 @@
         </div>
 
         <div class="item">
-          may 09, saturday, bushwick, boyfriend coop - <a href"https://www.instagram.com/queerbackgammon/" target="_blank" rel="noopener">ig post</a>
+          may 09, saturday, boyfriend coop - <a href"https://www.instagram.com/queerbackgammon/" target="_blank" rel="noopener">ig post</a>
         </div>
 
         <div class="item muted">more dates soon</div>
@@ -348,11 +348,28 @@
     </div>
 
     <div class="bottom">
-     <form onsubmit="subscribeByEmail(event)">
+     <form 
+  action="https://docs.google.com/forms/d/e/1FAIpQLSfFPOmf5PEk_x7e3XnSkRA20Ntk4VeMkZMXLwNfXPdmzyLjeQ/formResponse"
+  method="POST"
+  target="hidden_iframe"
+  onsubmit="handleSubscribe()"
+>
   <div class="form-line">
-    <input id="subscriberEmail" type="email" placeholder="your email" required>
+    <input 
+      type="email" 
+      name="entry.2005620554"
+      placeholder="your email" 
+      required
+    >
     <button type="submit">subscribe</button>
   </div>
+</form>
+
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+
+<div class="subnote" id="subscribeMessage">
+  events, merch, volunteer calls
+</div>
 </form>
 
       <div class="subnote">for events, merch, volunteer calls</div>
@@ -411,6 +428,17 @@
 
   window.location.href =
     "mailto:hello@queerbackgammon.com?subject=" + subject + "&body=" + body;
+}
+    
+      function handleSubscribe() {
+  const el = document.getElementById("subscribeMessage");
+  el.style.opacity = 0.3;
+
+  setTimeout(() => {
+    el.textContent = "you’re in";
+    el.style.opacity = 1;
+  }, 300);
+}
 }
   </script>
 </body>
