@@ -26,45 +26,46 @@
       cursor: none;
     }
 
-   .cursor {
+  .cursor {
   position: fixed;
-  width: 12px;
-  height: 12px;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-}
-
-.dice {
-  width: 100%;
-  height: 100%;
+  width: 14px;
+  height: 14px;
   border: 1px solid var(--white);
   border-radius: 2px;
-  position: relative;
-  animation: rotateDice 2.6s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+
+  animation: rotateDice 2.4s linear infinite;
   opacity: 0.7;
 }
 
-/* perfectly centered 3 dots */
-.dice::before {
+/* perfect 3-dot dice face */
+.cursor::after {
   content: "";
   position: absolute;
+
   width: 2px;
   height: 2px;
   background: var(--white);
   border-radius: 50%;
-  top: 2px;
-  left: 2px;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   box-shadow:
-    4px 4px 0 var(--white),
-    8px 8px 0 var(--white);
+    -4px -4px 0 var(--white),
+     4px  4px 0 var(--white);
 }
 
 @keyframes rotateDice {
-  to { transform: rotate(360deg); }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
-
-    }
 
     .logo-bg {
       position: fixed;
