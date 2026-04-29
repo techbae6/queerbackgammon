@@ -9,7 +9,7 @@
       --bg: #002FA7;
       --logo: #001EFF;
       --white: #f7f4ee;
-      --soft: rgba(247,244,238,0.52);
+      --soft: rgba(247,244,238,0.5);
       --x: 0px;
       --y: 0px;
     }
@@ -20,7 +20,7 @@
       margin: 0;
       background: var(--bg);
       color: var(--white);
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Arial, sans-serif;
       padding: 28px 42px;
       overflow: hidden;
       cursor: none;
@@ -43,9 +43,8 @@
       inset: 0;
       border: 1px solid var(--white);
       border-radius: 3px;
-      animation: spin 2.6s linear infinite;
-      transform-origin: center;
-      opacity: 0.7;
+      animation: spin 3s linear infinite;
+      opacity: 0.6;
     }
 
     .cursor::after {
@@ -61,7 +60,7 @@
       box-shadow:
         -4px -4px 0 var(--white),
          4px  4px 0 var(--white);
-      animation: spin 2.6s linear infinite;
+      animation: spin 3s linear infinite;
     }
 
     @keyframes spin {
@@ -70,69 +69,64 @@
 
     /* ---------- LOGO ---------- */
 
-    .logo-bg {
+    .logo {
       position: fixed;
       top: 50%;
-      left: 54%;
-      width: min(78vw, 760px);
-      height: min(78vw, 760px);
+      left: 52%;
+      width: min(75vw, 720px);
+      height: min(75vw, 720px);
       background: var(--logo);
-      -webkit-mask: url("logo.png") center / contain no-repeat;
-      mask: url("logo.png") center / contain no-repeat;
-      opacity: 0.78;
-      pointer-events: none;
-      z-index: 0;
+      -webkit-mask: url("logo.png") center/contain no-repeat;
+      mask: url("logo.png") center/contain no-repeat;
+      opacity: 0.75;
       animation: pulse 10s ease-in-out infinite;
+      pointer-events: none;
       transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y)));
     }
 
     @keyframes pulse {
       0%,100% { opacity: 0.6; }
-      50% { opacity: 0.92; }
+      50% { opacity: 0.9; }
     }
 
     /* ---------- LAYOUT ---------- */
 
     main {
-      position: relative;
-      z-index: 2;
-      height: calc(100svh - 56px);
-      max-width: 940px;
+      height: calc(100vh - 56px);
       display: grid;
       grid-template-rows: auto auto 1fr auto;
+      max-width: 900px;
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
-      font-size: clamp(76px, 12vw, 146px);
+      font-size: clamp(70px, 12vw, 140px);
       line-height: 0.72;
-      letter-spacing: -0.145em;
-      font-weight: 950;
+      letter-spacing: -0.14em;
       margin: 0 0 20px;
+      font-weight: 900;
     }
 
     p {
-      margin: 5px 0;
-      font-size: 15.5px;
-      line-height: 1.25;
-      max-width: 680px;
+      margin: 4px 0;
+      font-size: 15px;
+      max-width: 620px;
     }
 
-    a, button {
-      color: var(--white);
+    a {
+      color: white;
       text-decoration: underline;
-      text-underline-offset: 3px;
     }
 
-    a:hover, button:hover { opacity: 0.68; }
-
-    /* ---------- HOVER SWAP (NO SHIFT) ---------- */
+    /* ---------- SWAP ---------- */
 
     .swap {
       display: inline-grid;
     }
 
     .swap span {
-      grid-area: 1 / 1;
+      grid-area: 1/1;
     }
 
     .swap .alt {
@@ -153,20 +147,20 @@
       margin-top: 36px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 72px;
+      gap: 70px;
       max-width: 820px;
     }
 
     .section-title {
-      font-size: 11.5px;
+      font-size: 11px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--soft);
       margin-bottom: 12px;
+      color: var(--soft);
     }
 
     .item {
-      font-size: 15.5px;
+      font-size: 15px;
       margin-bottom: 8px;
     }
 
@@ -191,17 +185,15 @@
       border-bottom: 1px solid white;
       background: transparent;
       color: white;
-      font-size: 15.5px;
+      font-size: 15px;
       padding: 5px 0;
       outline: none;
     }
 
-    input::placeholder { color: var(--soft); }
-
     button {
       border: none;
       background: transparent;
-      font-size: 15.5px;
+      font-size: 15px;
       cursor: none;
     }
 
@@ -213,7 +205,6 @@
 
     .contact {
       margin-top: 10px;
-      font-size: 15.5px;
     }
 
     footer {
@@ -237,7 +228,7 @@
       font-size: clamp(60px, 10vw, 132px);
       line-height: 0.78;
       letter-spacing: -0.14em;
-      font-weight: 950;
+      font-weight: 900;
     }
 
     .egg.active { display: flex; }
@@ -246,7 +237,6 @@
 
     @media (max-width: 760px) {
       body {
-        padding: 24px;
         overflow-y: auto;
         cursor: auto;
       }
@@ -255,29 +245,10 @@
 
       main {
         height: auto;
-        min-height: calc(100svh - 48px);
-        display: block;
-      }
-
-      h1 {
-        font-size: clamp(72px, 22vw, 106px);
-        margin-bottom: 24px;
-      }
-
-      .logo-bg {
-        left: 50%;
-        width: 138vw;
-        height: 138vw;
       }
 
       .grid {
         grid-template-columns: 1fr;
-        gap: 32px;
-        margin-top: 40px;
-      }
-
-      .bottom {
-        margin-top: 40px;
       }
     }
   </style>
@@ -285,7 +256,7 @@
 
 <body>
   <div class="cursor" id="cursor"></div>
-  <div class="logo-bg"></div>
+  <div class="logo"></div>
 
   <div class="egg" id="egg">
     <div>you sit<br>you play<br>you stay</div>
@@ -318,10 +289,9 @@
         </div>
 
         <div class="item">
-          may 09, saturday, boyfriend coop - <a href"https://www.instagram.com/queerbackgammon/" target="_blank" rel="noopener">ig post</a>
+          may 09, saturday, bushwick -
+          <a href="https://www.instagram.com/queerbackgammon/" target="_blank">ig post</a>
         </div>
-
-        <div class="item muted">more dates soon</div>
       </section>
 
       <section>
@@ -348,37 +318,31 @@
     </div>
 
     <div class="bottom">
-     <form 
-  action="https://docs.google.com/forms/d/e/1FAIpQLSfFPOmf5PEk_x7e3XnSkRA20Ntk4VeMkZMXLwNfXPdmzyLjeQ/formResponse"
-  method="POST"
-  target="hidden_iframe"
-  onsubmit="handleSubscribe()"
->
-  <div class="form-line">
-    <input 
-      type="email" 
-      name="entry.2005620554"
-      placeholder="your email" 
-      required
-    >
-    <button type="submit">subscribe</button>
-  </div>
-</form>
+      <form 
+        action="https://docs.google.com/forms/d/e/1FAIpQLSfFPOmf5PEk_x7e3XnSkRA20Ntk4VeMkZMXLwNfXPdmzyLjeQ/formResponse"
+        method="POST"
+        target="hidden_iframe"
+        onsubmit="handleSubscribe()"
+      >
+        <div class="form-line">
+          <input 
+            type="email" 
+            name="entry.1425753212"
+            placeholder="your email" 
+            required
+          >
+          <button type="submit">subscribe</button>
+        </div>
+      </form>
 
-<iframe name="hidden_iframe" style="display:none;"></iframe>
+      <iframe name="hidden_iframe" style="display:none;"></iframe>
 
-<div class="subnote" id="subscribeMessage">
-  events, merch, volunteer calls
-</div>
-</form>
-
-      <div class="subnote">for events, merch, volunteer calls</div>
+      <div class="subnote" id="msg">
+        events, merch, volunteer calls
+      </div>
 
       <p class="contact">
-        <a class="swap" href="mailto:hello@queerbackgammon.com">
-          <span class="main">contact</span>
-          <span class="alt">hello@queerbackgammon.com</span>
-        </a>
+        <a href="mailto:hello@queerbackgammon.com">contact</a>
       </p>
 
       <footer>
@@ -390,11 +354,11 @@
   <script>
     const cursor = document.getElementById("cursor");
     const egg = document.getElementById("egg");
-    const rollEl = document.getElementById("roll");
 
-    rollEl.textContent = Math.floor(Math.random() * 6) + 1;
+    document.getElementById("roll").textContent =
+      Math.floor(Math.random() * 6) + 1;
 
-    window.addEventListener("mousemove", (e) => {
+    window.addEventListener("mousemove", e => {
       cursor.style.left = e.clientX + "px";
       cursor.style.top = e.clientY + "px";
 
@@ -405,7 +369,7 @@
       document.documentElement.style.setProperty("--y", y + "px");
     });
 
-    document.addEventListener("mousedown", (e) => {
+    document.addEventListener("mousedown", e => {
       if (!e.target.closest("a, button, input, form")) {
         egg.classList.add("active");
       }
@@ -415,31 +379,15 @@
       egg.classList.remove("active");
     });
 
-    document.addEventListener("mouseleave", () => {
-      egg.classList.remove("active");
-    });
-    function subscribeByEmail(event) {
-  event.preventDefault();
+    function handleSubscribe() {
+      const el = document.getElementById("msg");
+      el.style.opacity = 0.3;
 
-  const email = document.getElementById("subscriberEmail").value;
-
-  const subject = encodeURIComponent("new queer backgammon subscriber");
-  const body = encodeURIComponent("email: " + email);
-
-  window.location.href =
-    "mailto:hello@queerbackgammon.com?subject=" + subject + "&body=" + body;
-}
-    
-      function handleSubscribe() {
-  const el = document.getElementById("subscribeMessage");
-  el.style.opacity = 0.3;
-
-  setTimeout(() => {
-    el.textContent = "you’re in";
-    el.style.opacity = 1;
-  }, 300);
-}
-}
+      setTimeout(() => {
+        el.textContent = "you’re in";
+        el.style.opacity = 1;
+      }, 300);
+    }
   </script>
 </body>
 </html>
