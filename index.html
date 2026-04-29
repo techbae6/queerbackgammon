@@ -318,7 +318,7 @@
         </div>
 
         <div class="item">
-          may 09, saturday, bushwick, boyfriend coop - <a href="#">ig post</a>
+          may 09, saturday, bushwick, boyfriend coop - <a href"https://www.instagram.com/queerbackgammon/" target="_blank" rel="noopener">ig post</a>
         </div>
 
         <div class="item muted">more dates soon</div>
@@ -348,12 +348,12 @@
     </div>
 
     <div class="bottom">
-      <form action="https://formspree.io/f/YOURFORMID" method="POST">
-        <div class="form-line">
-          <input type="email" name="email" placeholder="your email" required>
-          <button type="submit">subscribe</button>
-        </div>
-      </form>
+     <form onsubmit="subscribeByEmail(event)">
+  <div class="form-line">
+    <input id="subscriberEmail" type="email" placeholder="your email" required>
+    <button type="submit">subscribe</button>
+  </div>
+</form>
 
       <div class="subnote">for events, merch, volunteer calls</div>
 
@@ -401,6 +401,17 @@
     document.addEventListener("mouseleave", () => {
       egg.classList.remove("active");
     });
+    function subscribeByEmail(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("subscriberEmail").value;
+
+  const subject = encodeURIComponent("new queer backgammon subscriber");
+  const body = encodeURIComponent("email: " + email);
+
+  window.location.href =
+    "mailto:hello@queerbackgammon.com?subject=" + subject + "&body=" + body;
+}
   </script>
 </body>
 </html>
