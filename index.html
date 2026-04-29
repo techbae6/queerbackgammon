@@ -7,7 +7,7 @@
   <style>
     :root {
       --bg: #002FA7;
-      --logo: #0037ff;
+      --logo: #0000ff;
       --white: #f7f4ee;
       --soft: rgba(247, 244, 238, 0.54);
       --x: 0px;
@@ -28,18 +28,23 @@
 
     .cursor {
       position: fixed;
-      width: 10px;
-      height: 10px;
+      width: 11px;
+      height: 11px;
       border: 1px solid var(--white);
       border-radius: 2px;
       pointer-events: none;
       z-index: 9999;
-      opacity: 0.58;
+      opacity: 0.65;
       transform: translate(-50%, -50%);
-      animation: spin 3.2s linear infinite;
     }
 
-    .cursor::before {
+    .cursor-inner {
+      position: absolute;
+      inset: 0;
+      animation: diceRotate 1.8s linear infinite;
+    }
+
+    .cursor-inner::before {
       content: "";
       position: absolute;
       width: 2px;
@@ -51,15 +56,8 @@
       box-shadow: 4px 4px 0 var(--white);
     }
 
-    @keyframes spin {
-      to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
-    body:has(a:hover) .cursor,
-    body:has(button:hover) .cursor {
-      opacity: 0.9;
-      width: 13px;
-      height: 13px;
+    @keyframes diceRotate {
+      to { transform: rotate(360deg); }
     }
 
     .logo-bg {
@@ -72,21 +70,20 @@
       background: var(--logo);
       -webkit-mask: url("logo.png") center / contain no-repeat;
       mask: url("logo.png") center / contain no-repeat;
-      opacity: 0.62;
+      opacity: 0.74;
       z-index: 0;
       pointer-events: none;
       animation: logoPulse 10s ease-in-out infinite;
-      filter: saturate(2);
+      filter: saturate(3) contrast(1.1);
     }
 
     @keyframes logoPulse {
       0%, 100% {
-        opacity: 0.42;
+        opacity: 0.55;
         transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0.99);
       }
-
       50% {
-        opacity: 0.78;
+        opacity: 0.9;
         transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.025);
       }
     }
@@ -229,25 +226,6 @@
       cursor: none;
     }
 
-    .egg {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      color: var(--white);
-      z-index: 20;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: clamp(60px, 10vw, 132px);
-      line-height: 0.78;
-      letter-spacing: -0.14em;
-      font-weight: 950;
-      cursor: pointer;
-    }
-
-    .egg.active { display: flex; }
-
     @media (max-width: 760px) {
       body {
         padding: 24px;
@@ -278,7 +256,7 @@
         left: 50%;
         width: 138vw;
         height: 138vw;
-        opacity: 0.7;
+        opacity: 0.82;
       }
 
       .grid {
@@ -296,24 +274,15 @@
         margin-top: 18px;
       }
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      .logo-bg,
-      .enter,
-      .cursor {
-        animation: none;
-      }
-    }
   </style>
 </head>
 
 <body>
-  <div class="cursor" id="cursor"></div>
-  <div class="logo-bg"></div>
-
-  <div class="egg" id="egg" onclick="toggleEgg()">
-    <div>you sit<br>you play<br>you stay</div>
+  <div class="cursor" id="cursor">
+    <div class="cursor-inner"></div>
   </div>
+
+  <div class="logo-bg"></div>
 
   <main>
     <h1 class="enter">queer<br>backgammon</h1>
@@ -329,9 +298,8 @@
         </a>
       </p>
 
-      <p class="pitch swap">
-        <span class="main">a queer gathering around backgammon - an ancient game of chance, strategy, conversation, and staying a little longer.</span>
-        <span class="alt">a game night, a social ritual, a soft excuse to sit with strangers.</span>
+      <p class="pitch">
+        a queer gathering around backgammon - an ancient game of chance, strategy, conversation, and staying a little longer.
       </p>
     </div>
 
@@ -342,9 +310,8 @@
           <span class="alt">gatherings</span>
         </div>
 
-        <div class="item swap">
-          <span class="main">may 09, saturday, bushwick - <a href="#">ig post</a></span>
-          <span class="alt">next gathering - <a href="#">details</a></span>
+        <div class="item">
+          may 09, saturday, bushwick - <a href="#">ig post</a>
         </div>
 
         <div class="item muted">more dates soon</div>
@@ -356,20 +323,9 @@
           <span class="alt">merch</span>
         </div>
 
-        <div class="item swap">
-          <span class="main">bandana <span class="muted">coming soon</span></span>
-          <span class="alt">bandana <span class="muted">for coded signals</span></span>
-        </div>
-
-        <div class="item swap">
-          <span class="main">t-shirt <span class="muted">coming soon</span></span>
-          <span class="alt">t-shirt <span class="muted">for showing up</span></span>
-        </div>
-
-        <div class="item swap">
-          <span class="main">tote <span class="muted">coming soon</span></span>
-          <span class="alt">tote <span class="muted">for carrying the scene</span></span>
-        </div>
+        <div class="item">bandana <span class="muted">coming soon</span></div>
+        <div class="item">t-shirt <span class="muted">coming soon</span></div>
+        <div class="item">tote <span class="muted">coming soon</span></div>
       </section>
     </div>
 
@@ -383,10 +339,7 @@
           <input type="hidden" name="message" value="new queer backgammon subscriber">
         </form>
 
-        <div class="subnote swap">
-          <span class="main">events, merch, volunteer calls</span>
-          <span class="alt">no spam, just gatherings</span>
-        </div>
+        <div class="subnote">events, merch, volunteer calls</div>
       </div>
 
       <p class="contact">
@@ -397,27 +350,16 @@
       </p>
     </div>
 
-    <footer class="swap" onclick="toggleEgg()">
-      <span class="main">est. nyc - roll: <span id="roll"></span></span>
-      <span class="alt">kumarda kaybeden aşkta kazanır</span>
+    <footer>
+      est. nyc - roll: <span id="roll"></span>
     </footer>
   </main>
 
   <script>
     const rollEl = document.getElementById("roll");
     const cursor = document.getElementById("cursor");
-    const egg = document.getElementById("egg");
 
-    function rollDice() {
-      rollEl.textContent = Math.floor(Math.random() * 6) + 1;
-    }
-
-    function toggleEgg() {
-      egg.classList.toggle("active");
-      rollDice();
-    }
-
-    rollDice();
+    rollEl.textContent = Math.floor(Math.random() * 6) + 1;
 
     window.addEventListener("mousemove", function(e) {
       cursor.style.left = e.clientX + "px";
