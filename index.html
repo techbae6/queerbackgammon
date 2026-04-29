@@ -1,1 +1,554 @@
-pbcopy < "/Users/eveirem/Documents/Codex/2026-04-29/im-making-a-website-for-my/index.html"
+<!doctype html>
+<html lang="en">
+<head>
+  <title>queerbackgammon</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="a queer gathering around backgammon - an ancient game of chance, strategy, conversation, and staying a little longer."
+  >
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <style>
+    :root {
+      --bg: #002FA7;
+      --logo: #001EFF;
+      --white: #f7f4ee;
+      --soft: rgba(247,244,238,0.52);
+      --x: 0px;
+      --y: 0px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 28px 42px;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .cursor {
+      position: fixed;
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      animation: spin 3.2s linear infinite;
+    }
+
+    .cursor::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--white);
+      border-radius: 3px;
+      opacity: 0.62;
+    }
+
+    .cursor::after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow:
+        -4px -4px 0 var(--white),
+         4px  4px 0 var(--white);
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .logo {
+      position: fixed;
+      top: 50%;
+      left: 53%;
+      width: min(76vw, 740px);
+      height: min(76vw, 740px);
+      background: var(--logo);
+      -webkit-mask: url("logo.png") center / contain no-repeat;
+      mask: url("logo.png") center / contain no-repeat;
+      opacity: 0.78;
+      pointer-events: none;
+      z-index: 0;
+      animation: pulse 10s ease-in-out infinite;
+      transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y)));
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.62; }
+      50% { opacity: 0.92; }
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+      height: calc(100svh - 56px);
+      max-width: 920px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+    }
+
+    h1 {
+      font-size: clamp(76px, 12vw, 146px);
+      line-height: 0.72;
+      letter-spacing: -0.145em;
+      font-weight: 950;
+      margin: 0 0 20px;
+    }
+
+    p {
+      margin: 5px 0;
+      font-size: 15.5px;
+      line-height: 1.25;
+      max-width: 680px;
+    }
+
+    .blank-line {
+      height: 1.25em;
+      margin: 0;
+    }
+
+    a,
+    button {
+      color: var(--white);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    a:hover,
+    button:hover {
+      opacity: 0.68;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 1px solid var(--white);
+      outline-offset: 5px;
+    }
+
+    .swap {
+      display: inline-grid;
+      vertical-align: baseline;
+    }
+
+    .swap span {
+      grid-area: 1 / 1;
+      white-space: nowrap;
+    }
+
+    .swap .alt {
+      opacity: 0;
+    }
+
+    .swap:hover .main,
+    .swap:focus-visible .main {
+      opacity: 0;
+    }
+
+    .swap:hover .alt,
+    .swap:focus-visible .alt {
+      opacity: 1;
+    }
+
+    .grid {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      max-width: 820px;
+      align-items: start;
+    }
+
+    .section-title {
+      font-size: 11.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 12px;
+    }
+
+    .item {
+      display: block;
+      width: 100%;
+      font-size: 15.5px;
+      line-height: 1.25;
+      margin-bottom: 9px;
+    }
+
+    .item.swap {
+      display: grid;
+      justify-items: start;
+    }
+
+    .muted {
+      color: var(--soft);
+    }
+
+    .bottom {
+      align-self: end;
+      max-width: 440px;
+    }
+
+    .contact .swap {
+      max-width: 100%;
+    }
+
+    .form-line {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: end;
+    }
+
+    input {
+      border: none;
+      border-bottom: 1px solid var(--white);
+      background: transparent;
+      color: var(--white);
+      font-size: 15.5px;
+      padding: 5px 0;
+      outline: none;
+      min-width: 0;
+    }
+
+    input::placeholder {
+      color: var(--soft);
+    }
+
+    button {
+      border: none;
+      background: transparent;
+      color: var(--white);
+      font-size: 15.5px;
+      padding: 5px 0;
+      cursor: none;
+    }
+
+    .subnote {
+      font-size: 12px;
+      color: var(--soft);
+      margin-top: 6px;
+    }
+
+    .contact {
+      margin-top: 10px;
+      font-size: 15.5px;
+    }
+
+    footer {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--soft);
+    }
+
+    .egg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 50;
+      color: var(--white);
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: clamp(60px, 10vw, 132px);
+      line-height: 0.78;
+      letter-spacing: -0.14em;
+      font-weight: 950;
+      pointer-events: none;
+    }
+
+    .egg.active {
+      display: flex;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor::before,
+      .cursor,
+      .logo {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 760px), (pointer: coarse) {
+      body {
+        padding: 24px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        cursor: auto;
+      }
+
+      a,
+      button {
+        cursor: pointer;
+      }
+
+      .cursor {
+        display: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      main {
+        height: auto;
+        min-height: calc(100svh - 48px);
+        display: block;
+        max-width: 100%;
+      }
+
+      h1 {
+        font-size: clamp(72px, 22vw, 106px);
+        line-height: 0.74;
+        letter-spacing: -0.13em;
+        margin-bottom: 24px;
+      }
+
+      p,
+      .item,
+      input,
+      button {
+        font-size: 15px;
+      }
+
+      .logo {
+        left: 50%;
+        top: 48%;
+        width: min(150vw, 720px);
+        height: min(150vw, 720px);
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-top: 40px;
+        max-width: 100%;
+      }
+
+      .bottom {
+        margin-top: 40px;
+        max-width: 100%;
+      }
+
+      .form-line {
+        max-width: 100%;
+      }
+
+      .contact .swap span {
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+    }
+
+    @media (max-width: 760px) and (max-height: 760px) {
+      body {
+        padding-block: 24px 32px;
+      }
+
+      h1 {
+        font-size: clamp(66px, 20vw, 96px);
+        margin-bottom: 18px;
+      }
+
+      .grid {
+        gap: 26px;
+        margin-top: 34px;
+      }
+
+      .bottom {
+        margin-top: 34px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      body {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: clamp(62px, 21vw, 84px);
+        letter-spacing: -0.12em;
+      }
+
+      .form-line {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        align-items: start;
+      }
+
+      button {
+        width: fit-content;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="logo"></div>
+
+  <div class="egg" id="egg">
+    <div>you sit<br>you play<br>you stay</div>
+  </div>
+
+  <main>
+    <h1>queer<br>backgammon</h1>
+
+    <div>
+      <p>a little bit of play, a little bit of culture</p>
+      <p>(mostly) brooklyn + (sometimes) los angeles</p>
+
+      <p>
+        <a class="swap" href="https://instagram.com/queerbackgammon" target="_blank" rel="noopener">
+          <span class="main">instagram</span>
+          <span class="alt">@queerbackgammon</span>
+        </a>
+      </p>
+
+      <p class="blank-line" aria-hidden="true">&nbsp;</p>
+
+      <p>
+        a queer gathering around backgammon - an ancient game of chance, strategy, conversation, and staying a little longer.
+      </p>
+    </div>
+
+    <div class="grid">
+      <section>
+        <div class="section-title swap">
+          <span class="main">future events</span>
+          <span class="alt">gatherings</span>
+        </div>
+
+        <div class="item">
+          may 09, saturday, bushwick -
+          <a href="https://instagram.com/queerbackgammon" target="_blank" rel="noopener">ig post</a>
+        </div>
+
+        <div class="item muted">more dates soon</div>
+      </section>
+
+      <section>
+        <div class="section-title swap">
+          <span class="main">objects for play</span>
+          <span class="alt">merch</span>
+        </div>
+
+        <div class="item swap">
+          <span class="main">bandana <span class="muted">coming soon</span></span>
+          <span class="alt">bandana <span class="muted">for coded signals</span></span>
+        </div>
+
+        <div class="item swap">
+          <span class="main">t-shirt <span class="muted">coming soon</span></span>
+          <span class="alt">t-shirt <span class="muted">for showing up</span></span>
+        </div>
+
+        <div class="item swap">
+          <span class="main">tote <span class="muted">coming soon</span></span>
+          <span class="alt">tote <span class="muted">for carrying the scene</span></span>
+        </div>
+      </section>
+    </div>
+
+    <div class="bottom">
+      <form
+        action="https://docs.google.com/forms/d/e/1FAIpQLSfFPOmf5PEk_x7e3XnSkRA20Ntk4VeMkZMXLwNfXPdmzyLjeQ/formResponse"
+        method="POST"
+        target="hidden_iframe"
+        onsubmit="handleSubscribe()"
+      >
+        <div class="form-line">
+          <input
+            id="emailInput"
+            type="email"
+            name="entry.1425753212"
+            placeholder="your email"
+            autocomplete="email"
+            required
+          >
+          <button type="submit">subscribe</button>
+        </div>
+      </form>
+
+      <iframe name="hidden_iframe" title="hidden subscription response" style="display:none;"></iframe>
+
+      <div class="subnote">events, merch, volunteer calls</div>
+
+      <p class="contact">
+        <a class="swap" href="mailto:hello@queerbackgammon.com">
+          <span class="main">contact</span>
+          <span class="alt">hello@queerbackgammon.com</span>
+        </a>
+      </p>
+
+      <footer>
+        est. nyc - roll: <span id="roll"></span>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    const cursor = document.getElementById("cursor");
+    const egg = document.getElementById("egg");
+    const emailInput = document.getElementById("emailInput");
+
+    document.getElementById("roll").textContent =
+      Math.floor(Math.random() * 6) + 1;
+
+    window.addEventListener("mousemove", function(e) {
+      if (!cursor) return;
+
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
+
+      const x = (e.clientX / window.innerWidth - 0.5) * 12;
+      const y = (e.clientY / window.innerHeight - 0.5) * 12;
+
+      document.documentElement.style.setProperty("--x", x + "px");
+      document.documentElement.style.setProperty("--y", y + "px");
+    });
+
+    document.addEventListener("mousedown", function(e) {
+      if (!e.target.closest("a, button, input, form")) {
+        egg.classList.add("active");
+      }
+    });
+
+    document.addEventListener("mouseup", function() {
+      egg.classList.remove("active");
+    });
+
+    document.addEventListener("mouseleave", function() {
+      egg.classList.remove("active");
+    });
+
+    function handleSubscribe() {
+      setTimeout(function() {
+        emailInput.value = "";
+        emailInput.placeholder = "you're in";
+      }, 250);
+
+      setTimeout(function() {
+        emailInput.placeholder = "your email";
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
