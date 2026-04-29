@@ -5,197 +5,256 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
+    :root {
+      --blue: #002FA7;
+      --logo-blue: #00146f;
+      --white: #f5f5f5;
+      --soft: rgba(245, 245, 245, 0.58);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #002FA7;
-      color: #f5f5f5;
+      background: var(--blue);
+      color: var(--white);
       font-family: Arial, sans-serif;
-      padding: 40px;
+      padding: 42px;
       overflow-x: hidden;
+      cursor: none;
+    }
+
+    .cursor-dice {
+      position: fixed;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--white);
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 999;
+      transform: translate(-50%, -50%) rotate(0deg);
+      animation: diceSpin 1.4s linear infinite;
+      opacity: 0.85;
+    }
+
+    .cursor-dice::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      background:
+        radial-gradient(circle, var(--white) 0 2px, transparent 2.2px) 0 0 / 10px 10px,
+        radial-gradient(circle, var(--white) 0 2px, transparent 2.2px) 5px 5px / 10px 10px;
+    }
+
+    @keyframes diceSpin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
     .logo-bg {
       position: fixed;
       top: 50%;
       left: 50%;
-      width: min(78vw, 680px);
-      height: min(78vw, 680px);
+      width: min(86vw, 760px);
+      height: min(86vw, 760px);
       transform: translate(-50%, -50%);
-      background-image: url("logo.png");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      opacity: 0.76;
-      filter: saturate(1.8) contrast(1.2);
+      background: var(--logo-blue);
+      -webkit-mask: url("logo.png") center / contain no-repeat;
+      mask: url("logo.png") center / contain no-repeat;
+      opacity: 0.55;
       z-index: 0;
       pointer-events: none;
-      animation: breathe 7s ease-in-out infinite;
+      animation: breathe 8s ease-in-out infinite;
     }
 
     @keyframes breathe {
       0%, 100% {
-        opacity: 0.50;
+        opacity: 0.38;
         transform: translate(-50%, -50%) scale(1);
       }
-
       50% {
-        opacity: 0.42;
-        transform: translate(-50%, -50%) scale(1.04);
+        opacity: 0.62;
+        transform: translate(-50%, -50%) scale(1.035);
       }
     }
 
-    .logo-click-zone {
+    .click-zone {
       position: fixed;
       top: 50%;
       left: 50%;
-      width: min(78vw, 680px);
-      height: min(78vw, 680px);
+      width: min(86vw, 760px);
+      height: min(86vw, 760px);
       transform: translate(-50%, -50%);
       z-index: 3;
-      cursor: pointer;
     }
 
-    .content {
+    main {
       position: relative;
       z-index: 2;
+      max-width: 960px;
+    }
+
+    .enter {
+      opacity: 0;
+      animation: enter 900ms ease forwards;
+    }
+
+    .delay-1 { animation-delay: 120ms; }
+    .delay-2 { animation-delay: 240ms; }
+    .delay-3 { animation-delay: 360ms; }
+
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h1 {
-      font-size: 80px;
-      line-height: 0.9;
-      margin: 0 0 30px;
-      letter-spacing: -0.04em;
-      font-weight: 700;
+      font-size: clamp(66px, 12vw, 138px);
+      line-height: 0.78;
+      letter-spacing: -0.105em;
+      margin: 0 0 36px;
+      font-weight: 800;
     }
 
     p {
-      margin: 6px 0;
-      font-size: 16px;
+      margin: 7px 0;
+      font-size: 17px;
       line-height: 1.35;
-      max-width: 520px;
+      max-width: 640px;
     }
 
     a {
-      color: #f5f5f5;
+      color: var(--white);
       text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    a:hover {
+      opacity: 0.65;
+    }
+
+    .swap .alt {
+      display: none;
+    }
+
+    .swap:hover .main {
+      display: none;
+    }
+
+    .swap:hover .alt {
+      display: inline;
     }
 
     .pitch {
-      margin-top: 18px;
-      opacity: 0.82;
+      margin-top: 26px;
+      max-width: 720px;
+      opacity: 0.86;
     }
 
-    .sections {
-      margin-top: 80px;
-      display: flex;
-      gap: 120px;
-      flex-wrap: wrap;
-    }
-
-    .section {
-      opacity: 0;
-      animation: fadeIn 1.4s ease forwards;
+    .grid {
+      margin-top: 86px;
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) minmax(260px, 1fr);
+      gap: 90px;
+      max-width: 850px;
     }
 
     .section:nth-child(2) {
       margin-top: 10px;
-      animation-delay: 0.18s;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
     }
 
     .section-title {
-      font-size: 12px;
-      letter-spacing: 1px;
-      margin-bottom: 20px;
-      opacity: 0.7;
+      font-size: 13px;
+      letter-spacing: 0.17em;
       text-transform: uppercase;
-    }
-
-    .title-alt {
-      display: none;
-    }
-
-    .section:hover .title-main {
-      display: none;
-    }
-
-    .section:hover .title-alt {
-      display: inline;
+      margin-bottom: 24px;
+      opacity: 0.72;
     }
 
     .item {
-      margin-bottom: 12px;
-      font-size: 16px;
+      font-size: 17px;
+      margin-bottom: 14px;
     }
 
     .muted {
-      opacity: 0.5;
+      color: var(--soft);
     }
 
     .bottom {
-      margin-top: 80px;
+      margin-top: 92px;
+      max-width: 520px;
     }
 
-    form {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+    .form-line {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: end;
+      max-width: 460px;
     }
 
     input {
       background: transparent;
-      border: none;
-      border-bottom: 1px solid #f5f5f5;
-      color: white;
-      padding: 6px;
-      width: 220px;
+      border: 0;
+      border-bottom: 1px solid var(--white);
+      color: var(--white);
+      padding: 6px 0;
+      font-size: 17px;
       outline: none;
-      font-size: 15px;
+      min-width: 0;
     }
 
     input::placeholder {
-      color: rgba(255,255,255,0.6);
+      color: var(--soft);
     }
 
     button {
       background: none;
-      border: none;
-      color: white;
+      border: 0;
+      color: var(--white);
       text-decoration: underline;
-      cursor: pointer;
-      font-size: 15px;
+      text-underline-offset: 3px;
+      font-size: 17px;
+      cursor: none;
       padding: 6px 0;
     }
 
     .subnote {
       font-size: 13px;
-      opacity: 0.5;
-      margin-top: 6px;
+      color: var(--soft);
+      margin-top: 9px;
+    }
+
+    .contact {
+      margin-top: 28px;
     }
 
     footer {
-      margin-top: 80px;
-      font-size: 12px;
-      opacity: 0.6;
+      margin-top: 90px;
+      font-size: 13px;
+      color: var(--soft);
     }
 
     .easter-egg {
       display: none;
       position: fixed;
       inset: 0;
-      background: #002FA7;
-      color: #f5f5f5;
-      z-index: 10;
+      background: var(--blue);
+      color: var(--white);
+      z-index: 20;
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-size: clamp(38px, 8vw, 92px);
-      line-height: 1.05;
-      letter-spacing: -0.06em;
+      font-size: clamp(46px, 9vw, 110px);
+      line-height: 0.9;
+      letter-spacing: -0.09em;
       cursor: pointer;
     }
 
@@ -203,23 +262,41 @@
       display: flex;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 760px) {
       body {
         padding: 28px;
       }
 
+      body,
+      button {
+        cursor: auto;
+      }
+
+      .cursor-dice {
+        display: none;
+      }
+
       h1 {
-        font-size: 58px;
+        font-size: clamp(64px, 22vw, 96px);
+        line-height: 0.8;
+        letter-spacing: -0.095em;
       }
 
-      p, .item {
-        font-size: 15px;
+      p,
+      .item,
+      input,
+      button {
+        font-size: 16px;
       }
 
-      .sections {
-        margin-top: 64px;
-        flex-direction: column;
-        gap: 42px;
+      .pitch {
+        max-width: 94%;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 44px;
+        margin-top: 70px;
       }
 
       .section:nth-child(2) {
@@ -227,31 +304,36 @@
       }
 
       .bottom {
-        margin-top: 64px;
+        margin-top: 72px;
+      }
+
+      .form-line {
+        max-width: 100%;
       }
 
       .logo-bg {
-        width: 118vw;
-        height: 118vw;
-        opacity: 0.15;
+        width: 132vw;
+        height: 132vw;
+        opacity: 0.48;
       }
 
-      .logo-click-zone {
-        width: 118vw;
-        height: 118vw;
+      .click-zone {
+        width: 132vw;
+        height: 132vw;
       }
 
-      input {
-        width: 190px;
+      footer {
+        margin-top: 80px;
       }
     }
   </style>
 </head>
 
 <body>
+  <div class="cursor-dice" id="cursorDice"></div>
 
   <div class="logo-bg"></div>
-  <div class="logo-click-zone" onclick="toggleEgg()"></div>
+  <div class="click-zone" onclick="toggleEgg()"></div>
 
   <div class="easter-egg" id="egg" onclick="toggleEgg()">
     <div>
@@ -261,22 +343,30 @@
     </div>
   </div>
 
-  <main class="content">
-    <h1>queer<br>backgammon</h1>
+  <main>
+    <h1 class="enter">queer<br>backgammon</h1>
 
-    <p>a little bit of play, a little bit of culture</p>
-    <p>(mostly) brooklyn + (sometimes) los angeles</p>
-    <p><a href="https://instagram.com/queerbackgammon">@queerbackgammon</a></p>
+    <div class="enter delay-1">
+      <p>a little bit of play, a little bit of culture</p>
+      <p>(mostly) brooklyn + (sometimes) los angeles</p>
+      <p class="swap">
+        <a href="https://instagram.com/queerbackgammon">
+          <span class="main">@queerbackgammon</span>
+          <span class="alt">instagram</span>
+        </a>
+      </p>
 
-    <p class="pitch">
-      a queer gathering around backgammon - an ancient game of chance, strategy, conversation, and staying a little longer.
-    </p>
+      <p class="pitch swap">
+        <span class="main">a queer gathering around backgammon - an ancient game of chance, strategy, conversation, and staying a little longer.</span>
+        <span class="alt">a game night, a social ritual, a soft excuse to sit with strangers.</span>
+      </p>
+    </div>
 
-    <div class="sections">
-      <div class="section">
-        <div class="section-title">
-          <span class="title-main">future events</span>
-          <span class="title-alt">gatherings</span>
+    <div class="grid enter delay-2">
+      <section class="section">
+        <div class="section-title swap">
+          <span class="main">future events</span>
+          <span class="alt">gatherings</span>
         </div>
 
         <div class="item">
@@ -285,33 +375,47 @@
         </div>
 
         <div class="item muted">more dates soon</div>
-      </div>
+      </section>
 
-      <div class="section">
-        <div class="section-title">
-          <span class="title-main">objects for play</span>
-          <span class="title-alt">objects</span>
+      <section class="section">
+        <div class="section-title swap">
+          <span class="main">objects for play</span>
+          <span class="alt">objects</span>
         </div>
 
-        <div class="item">bandana <span class="muted">coming soon</span></div>
-        <div class="item">t-shirt <span class="muted">coming soon</span></div>
-        <div class="item">tote <span class="muted">coming soon</span></div>
-      </div>
+        <div class="item swap">
+          <span class="main">bandana <span class="muted">coming soon</span></span>
+          <span class="alt">bandana <span class="muted">for coded signals</span></span>
+        </div>
+
+        <div class="item swap">
+          <span class="main">t-shirt <span class="muted">coming soon</span></span>
+          <span class="alt">t-shirt <span class="muted">for showing up</span></span>
+        </div>
+
+        <div class="item swap">
+          <span class="main">tote <span class="muted">coming soon</span></span>
+          <span class="alt">tote <span class="muted">for carrying the scene</span></span>
+        </div>
+      </section>
     </div>
 
-    <div class="bottom">
+    <div class="bottom enter delay-3">
       <form action="https://formspree.io/f/YOURFORMID" method="POST">
-        <input type="email" name="email" placeholder="your email" required>
+        <div class="form-line">
+          <input type="email" name="email" placeholder="your email" required>
+          <button type="submit">subscribe</button>
+        </div>
         <input type="hidden" name="message" value="new queer backgammon subscriber">
-        <button type="submit">subscribe</button>
       </form>
 
-      <div class="subnote">
-        events, merch, volunteer calls
-      </div>
+      <div class="subnote">events, merch, volunteer calls</div>
 
-      <p style="margin-top: 20px;">
-        <a href="mailto:hello@queerbackgammon.com">contact</a>
+      <p class="contact swap">
+        <a href="mailto:hello@queerbackgammon.com">
+          <span class="main">contact</span>
+          <span class="alt">hello@queerbackgammon.com</span>
+        </a>
       </p>
     </div>
 
@@ -327,7 +431,13 @@
     function toggleEgg() {
       document.getElementById("egg").classList.toggle("active");
     }
-  </script>
 
+    const cursorDice = document.getElementById("cursorDice");
+
+    window.addEventListener("mousemove", function(e) {
+      cursorDice.style.left = e.clientX + "px";
+      cursorDice.style.top = e.clientY + "px";
+    });
+  </script>
 </body>
 </html>
