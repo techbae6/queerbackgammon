@@ -430,25 +430,17 @@
     </div>
 
     <div class="grid">
-      <section>
-        <div class="section-title swap">
-          <span class="main">future events</span>
-          <span class="alt">gatherings</span>
-        </div>
+  <section>
+    <div class="section-title swap">
+      <span class="main">future events</span>
+      <span class="alt">gatherings</span>
+    </div>
 
-        <div class="item">
-          06/06, bushwick -
-          <a href="https://www.instagram.com/p/DYfRlObzi_t/" target="_blank" rel="noopener">ig post</a>
-        </div>
-        
-        <div class="item">
-          06/20, maria hernandez (first time outside!) -
-          <a href="https://www.instagram.com/p/DYzdaamzP0u/" target="_blank" rel="noopener">ig post</a>
-        </div>
-
-        <div class="item muted">more dates soon</div>
-      </section>
-
+    <div id="events-list">
+      <div class="item muted">loading dates...</div>
+    </div>
+  </section>
+</div>
       <section>
         <div class="section-title swap">
           <span class="main">objects for play</span>
@@ -555,5 +547,126 @@
       }, 3500);
     }
   </script>
+  <script>
+  const SHEET_ID = "1VLdi8A71wQR9X5fck5HWmFiRgyaWJ9r9i4FIAKzILOo";
+  const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+  const eventsList = document.getElementById("events-list");
+
+  function getCell(row, index) {
+    if (index < 0 || !row.c[index]) return "";
+    return row.c[index].f || row.c[index].v || "";
+  }
+
+  function parseDate(value) {
+    if (!value) return null;
+
+    const text = String(value).trim();
+
+    const gvizDate = text.match(/^Date\((\d+),(\d+),(\d+)\)$/);
+    if (gvizDate) {
+      return new Date(Number(gvizDate[1]), Number(gvizDate[2]), Number(gvizDate[3]));
+    }
+
+    const slashDate = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+    if (slashDate) {
+      let year = Number(slashDate[3]);
+      if (year < 100) year += 2000;
+
+      return new Date(
+        year,
+        Number(slashDate[1]) - 1,
+        Number(slashDate[2])
+      );
+    }
+
+    const fallback = new Date(text);
+    return isNaN(fallback) ? null : fallback;
+  }
+
+  function formatDate(date) {
+    return date.toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit"
+    });
+  }
+
+  function renderEvents(events) {
+    eventsList.innerHTML = "";
+
+    if (!events.length) {
+      eventsList.innerHTML = `<div class="item muted">more dates soon</div>`;
+      return;
+    }
+
+    events.forEach(event => {
+      const item = document.createElement("div");
+      item.className = "item";
+
+      const text = document.createTextNode(
+        `${formatDate(event.date)}, ${event.venue}${event.info ? ` (${event.info})` : ""}`
+      );
+
+      item.appendChild(text);
+
+      if (event.link) {
+        item.appendChild(document.createTextNode(" - "));
+
+        const link = document.createElement("a");
+        link.href = event.link;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = "ig post";
+
+        item.appendChild(link);
+      }
+
+      eventsList.appendChild(item);
+    });
+  }
+
+  async function loadEvents() {
+    try {
+      const response = await fetch(SHEET_URL);
+      const text = await response.text();
+
+      const jsonText = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?/)[1];
+      const data = JSON.parse(jsonText);
+
+      const columns = data.table.cols.map(col =>
+        (col.label || "").trim().toLowerCase()
+      );
+
+      const dateCol = columns.indexOf("date");
+      const venueCol = columns.indexOf("venue");
+      const infoCol = columns.indexOf("any more info");
+      const linkCol = columns.indexOf("link for ig post");
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const events = data.table.rows
+        .map(row => {
+          const date = parseDate(getCell(row, dateCol));
+
+          return {
+            date,
+            venue: getCell(row, venueCol),
+            info: getCell(row, infoCol),
+            link: getCell(row, linkCol)
+          };
+        })
+        .filter(event => event.date && event.date >= today)
+        .sort((a, b) => a.date - b.date);
+
+      renderEvents(events);
+    } catch (error) {
+      console.error(error);
+      eventsList.innerHTML = `<div class="item muted">dates unavailable right now</div>`;
+    }
+  }
+
+  loadEvents();
+</script>
 </body>
 </html>
