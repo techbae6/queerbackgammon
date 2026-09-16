@@ -4,7 +4,10 @@
   <title>queerbackgammon</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="a queer gathering around backgammon - an ancient game of chance, strategy, conversation, and staying a little longer.">
+  <meta
+    name="description"
+    content="a queer gathering around backgammon - an ancient game of chance, strategy, conversation, and staying a little longer."
+  >
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
   <link rel="apple-touch-icon" href="favicon.png">
@@ -19,7 +22,10 @@
     }
 
     * { box-sizing: border-box; }
-    html { min-height: 100%; }
+
+    html {
+      min-height: 100%;
+    }
 
     body {
       margin: 0;
@@ -60,7 +66,9 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      box-shadow: -4px -4px 0 var(--white), 4px 4px 0 var(--white);
+      box-shadow:
+        -4px -4px 0 var(--white),
+         4px  4px 0 var(--white);
     }
 
     @keyframes spin {
@@ -112,7 +120,10 @@
       max-width: 680px;
     }
 
-    .blank-line { height: 1.25em; margin: 0; }
+    .blank-line {
+      height: 1.25em;
+      margin: 0;
+    }
 
     a,
     button {
@@ -122,7 +133,9 @@
     }
 
     a:hover,
-    button:hover { opacity: 0.68; }
+    button:hover {
+      opacity: 0.68;
+    }
 
     a:focus-visible,
     button:focus-visible,
@@ -131,13 +144,29 @@
       outline-offset: 5px;
     }
 
-    .swap { display: inline-grid; vertical-align: baseline; }
-    .swap span { grid-area: 1 / 1; white-space: nowrap; }
-    .swap .alt { opacity: 0; }
+    .swap {
+      display: inline-grid;
+      vertical-align: baseline;
+    }
+
+    .swap span {
+      grid-area: 1 / 1;
+      white-space: nowrap;
+    }
+
+    .swap .alt {
+      opacity: 0;
+    }
+
     .swap:hover .main,
-    .swap:focus-visible .main { opacity: 0; }
+    .swap:focus-visible .main {
+      opacity: 0;
+    }
+
     .swap:hover .alt,
-    .swap:focus-visible .alt { opacity: 1; }
+    .swap:focus-visible .alt {
+      opacity: 1;
+    }
 
     .merch-callout {
       margin-top: 28px;
@@ -152,7 +181,7 @@
       margin-top: 34px;
       display: grid;
       grid-template-columns: 1fr;
-      gap: 32px;
+      gap: 72px;
       max-width: 820px;
       align-items: start;
     }
@@ -173,10 +202,23 @@
       margin-bottom: 9px;
     }
 
-    .item.swap { display: grid; justify-items: start; }
-    .muted { color: var(--soft); }
-    .bottom { align-self: end; max-width: 440px; }
-    .contact .swap { max-width: 100%; }
+    .item.swap {
+      display: grid;
+      justify-items: start;
+    }
+
+    .muted {
+      color: var(--soft);
+    }
+
+    .bottom {
+      align-self: end;
+      max-width: 440px;
+    }
+
+    .contact .swap {
+      max-width: 100%;
+    }
 
     .form-line {
       display: grid;
@@ -196,7 +238,9 @@
       min-width: 0;
     }
 
-    input::placeholder { color: var(--soft); }
+    input::placeholder {
+      color: var(--soft);
+    }
 
     button {
       border: none;
@@ -207,9 +251,22 @@
       cursor: none;
     }
 
-    .subnote { font-size: 12px; color: var(--soft); margin-top: 6px; }
-    .contact { margin-top: 10px; font-size: 15.5px; }
-    footer { margin-top: 10px; font-size: 12px; color: var(--soft); }
+    .subnote {
+      font-size: 12px;
+      color: var(--soft);
+      margin-top: 6px;
+    }
+
+    .contact {
+      margin-top: 10px;
+      font-size: 15.5px;
+    }
+
+    footer {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--soft);
+    }
 
     .egg {
       display: none;
@@ -228,12 +285,16 @@
       pointer-events: none;
     }
 
-    .egg.active { display: flex; }
+    .egg.active {
+      display: flex;
+    }
 
     @media (prefers-reduced-motion: reduce) {
       .cursor::before,
       .cursor,
-      .logo { animation: none; }
+      .logo {
+        animation: none;
+      }
     }
 
     @media (max-width: 760px), (pointer: coarse) {
@@ -243,9 +304,15 @@
         overflow-x: hidden;
         cursor: auto;
       }
+
       a,
-      button { cursor: pointer; }
-      .cursor { display: none; }
+      button {
+        cursor: pointer;
+      }
+
+      .cursor {
+        display: none;
+      }
     }
 
     @media (max-width: 760px) {
@@ -266,7 +333,9 @@
       p,
       .item,
       input,
-      button { font-size: 15px; }
+      button {
+        font-size: 15px;
+      }
 
       .logo {
         left: 50%;
@@ -275,14 +344,8 @@
         height: min(150vw, 720px);
       }
 
-      .merch-callout {
-        margin-top: 30px;
-      }
-
-      .merch-callout .swap span {
-        white-space: normal;
-        overflow-wrap: anywhere;
-      }
+      .merch-callout { margin-top: 30px; }
+      .merch-callout .swap span { white-space: normal; overflow-wrap: anywhere; }
 
       .grid {
         grid-template-columns: 1fr;
@@ -291,23 +354,58 @@
         max-width: 100%;
       }
 
-      .bottom { margin-top: 40px; max-width: 100%; }
-      .contact .swap span { white-space: normal; overflow-wrap: anywhere; }
+      .bottom {
+        margin-top: 40px;
+        max-width: 100%;
+      }
+
+      .form-line {
+        max-width: 100%;
+      }
+
+      .contact .swap span {
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
     }
 
     @media (max-width: 760px) and (max-height: 760px) {
-      body { padding-block: 24px 32px; }
-      h1 { font-size: clamp(66px, 20vw, 96px); margin-bottom: 18px; }
+      body {
+        padding-block: 24px 32px;
+      }
+
+      h1 {
+        font-size: clamp(66px, 20vw, 96px);
+        margin-bottom: 18px;
+      }
+
       .merch-callout { margin-top: 26px; }
       .grid { gap: 24px; margin-top: 28px; }
-      .bottom { margin-top: 34px; }
+
+      .bottom {
+        margin-top: 34px;
+      }
     }
 
     @media (max-width: 420px) {
-      body { padding: 20px; }
-      h1 { font-size: clamp(62px, 21vw, 84px); letter-spacing: -0.12em; }
-      .form-line { grid-template-columns: 1fr; gap: 6px; align-items: start; }
-      button { width: fit-content; }
+      body {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: clamp(62px, 21vw, 84px);
+        letter-spacing: -0.12em;
+      }
+
+      .form-line {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        align-items: start;
+      }
+
+      button {
+        width: fit-content;
+      }
     }
   </style>
 </head>
@@ -336,9 +434,18 @@
 
       <p class="blank-line" aria-hidden="true">&nbsp;</p>
 
-      <p>a queer gathering around backgammon: an ancient game of chance, strategy and conversation.</p>
+      <p>
+        a queer gathering around backgammon: an ancient game of chance, strategy and conversation.
+      </p>
+    </div>
 
-      <p class="merch-callout">
+    <div class="merch-callout">
+      <div class="section-title swap">
+        <span class="main">merch</span>
+        <span class="alt">objects for play</span>
+      </div>
+
+      <p>
         <a class="swap" href="merch/chosen-family-hat/">
           <span class="main">chosen family hat <span class="muted">$25</span></span>
           <span class="alt">chosen family hat <span class="muted">all profits donated to Black Trans Liberation Kitchen</span></span>
@@ -390,7 +497,9 @@
         </a>
       </p>
 
-      <footer>est. nyc - roll: <span id="roll"></span></footer>
+      <footer>
+        est. nyc - roll: <span id="roll"></span>
+      </footer>
     </div>
   </main>
 
@@ -399,21 +508,26 @@
     const egg = document.getElementById("egg");
     const emailInput = document.getElementById("emailInput");
 
-    document.getElementById("roll").textContent = Math.floor(Math.random() * 6) + 1;
+    document.getElementById("roll").textContent =
+      Math.floor(Math.random() * 6) + 1;
 
     window.addEventListener("mousemove", function(e) {
       if (!cursor) return;
+
       cursor.style.left = e.clientX + "px";
       cursor.style.top = e.clientY + "px";
 
       const x = (e.clientX / window.innerWidth - 0.5) * 12;
       const y = (e.clientY / window.innerHeight - 0.5) * 12;
+
       document.documentElement.style.setProperty("--x", x + "px");
       document.documentElement.style.setProperty("--y", y + "px");
     });
 
     document.addEventListener("mousedown", function(e) {
-      if (!e.target.closest("a, button, input, form")) egg.classList.add("active");
+      if (!e.target.closest("a, button, input, form")) {
+        egg.classList.add("active");
+      }
     });
 
     document.addEventListener("mouseup", function() {
@@ -435,7 +549,6 @@
       }, 3500);
     }
   </script>
-
   <script>
     const SHEET_ID = "1VLdi8A71wQR9X5fck5HWmFiRgyaWJ9r9i4FIAKzILOo";
     const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
@@ -451,32 +564,21 @@
       const text = String(value).trim();
 
       const gvizDate = text.match(/^Date\((\d+),(\d+),(\d+)\)$/);
-      if (gvizDate) {
-        return {
-          year: Number(gvizDate[1]),
-          month: Number(gvizDate[2]) + 1,
-          day: Number(gvizDate[3])
-        };
-      }
+      if (gvizDate) return { year:Number(gvizDate[1]), month:Number(gvizDate[2])+1, day:Number(gvizDate[3]) };
 
       const slashDate = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
       if (slashDate) {
         let year = Number(slashDate[3]);
         if (year < 100) year += 2000;
-        return {
-          year,
-          month: Number(slashDate[1]),
-          day: Number(slashDate[2])
-        };
+        return { year, month:Number(slashDate[1]), day:Number(slashDate[2]) };
       }
+
+      const iso = text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+      if (iso) return { year:Number(iso[1]), month:Number(iso[2]), day:Number(iso[3]) };
 
       const fallback = new Date(text);
       if (Number.isNaN(fallback.getTime())) return null;
-      return {
-        year: fallback.getFullYear(),
-        month: fallback.getMonth() + 1,
-        day: fallback.getDate()
-      };
+      return { year:fallback.getFullYear(), month:fallback.getMonth()+1, day:fallback.getDate() };
     }
 
     function getDateCell(row, index) {
@@ -485,50 +587,29 @@
       return parseDate(cell.v) || parseDate(cell.f);
     }
 
-    function dateKey(date) {
-      return date.year * 10000 + date.month * 100 + date.day;
-    }
+    function dateKey(date) { return date.year * 10000 + date.month * 100 + date.day; }
 
     function todayInNewYork() {
-      const parts = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric"
-      }).formatToParts(new Date());
-
+      const parts = new Intl.DateTimeFormat("en-US", { timeZone:"America/New_York", year:"numeric", month:"numeric", day:"numeric" }).formatToParts(new Date());
       const values = {};
-      parts.forEach(part => {
-        if (part.type !== "literal") values[part.type] = Number(part.value);
-      });
-
-      return {
-        year: values.year,
-        month: values.month,
-        day: values.day
-      };
+      parts.forEach(part => { if (part.type !== "literal") values[part.type] = Number(part.value); });
+      return { year:values.year, month:values.month, day:values.day };
     }
 
     function formatDate(date) {
-      return `${String(date.month).padStart(2, "0")}/${String(date.day).padStart(2, "0")}`;
+      return `${String(date.month).padStart(2,"0")}/${String(date.day).padStart(2,"0")}`;
     }
 
     function renderEvents(events) {
       eventsList.innerHTML = "";
-
       if (!events.length) {
         eventsList.innerHTML = `<div class="item muted">more dates soon</div>`;
         return;
       }
-
       events.forEach(event => {
         const item = document.createElement("div");
         item.className = "item";
-
-        item.appendChild(document.createTextNode(
-          `${formatDate(event.date)}, ${event.venue}${event.info ? ` (${event.info})` : ""}`
-        ));
-
+        item.appendChild(document.createTextNode(`${formatDate(event.date)}, ${event.venue}${event.info ? ` (${event.info})` : ""}`));
         if (event.link) {
           item.appendChild(document.createTextNode(" - "));
           const link = document.createElement("a");
@@ -538,40 +619,28 @@
           link.textContent = "ig post";
           item.appendChild(link);
         }
-
         eventsList.appendChild(item);
       });
     }
 
     async function loadEvents() {
       try {
-        const response = await fetch(`${SHEET_URL}&_=${Date.now()}`, { cache: "no-store" });
+        const response = await fetch(`${SHEET_URL}&_=${Date.now()}`, { cache:"no-store" });
         const text = await response.text();
         const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?/);
         if (!match) throw new Error("Could not parse event sheet response");
-
         const data = JSON.parse(match[1]);
         const columns = data.table.cols.map(col => (col.label || "").trim().toLowerCase());
-
         const dateCol = columns.indexOf("date");
         const venueCol = columns.indexOf("venue");
         const infoCol = columns.indexOf("any more info");
         const linkCol = columns.indexOf("link for ig post");
-
         if (dateCol < 0 || venueCol < 0) throw new Error("Missing date or venue column");
-
         const todayKey = dateKey(todayInNewYork());
-
         const events = data.table.rows
-          .map(row => ({
-            date: getDateCell(row, dateCol),
-            venue: getCell(row, venueCol),
-            info: getCell(row, infoCol),
-            link: getCell(row, linkCol)
-          }))
+          .map(row => ({ date:getDateCell(row,dateCol), venue:getCell(row,venueCol), info:getCell(row,infoCol), link:getCell(row,linkCol) }))
           .filter(event => event.date && event.venue && dateKey(event.date) >= todayKey)
-          .sort((a, b) => dateKey(a.date) - dateKey(b.date));
-
+          .sort((a,b) => dateKey(a.date) - dateKey(b.date));
         renderEvents(events);
       } catch (error) {
         console.error(error);
