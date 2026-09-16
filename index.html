@@ -139,11 +139,20 @@
     .swap:hover .alt,
     .swap:focus-visible .alt { opacity: 1; }
 
+    .merch-callout {
+      margin-top: 28px;
+      font-size: 15.5px;
+    }
+
+    .merch-callout .swap {
+      max-width: 100%;
+    }
+
     .grid {
-      margin-top: 36px;
+      margin-top: 34px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 72px;
+      grid-template-columns: 1fr;
+      gap: 32px;
       max-width: 820px;
       align-items: start;
     }
@@ -266,10 +275,19 @@
         height: min(150vw, 720px);
       }
 
+      .merch-callout {
+        margin-top: 30px;
+      }
+
+      .merch-callout .swap span {
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+
       .grid {
         grid-template-columns: 1fr;
-        gap: 32px;
-        margin-top: 40px;
+        gap: 26px;
+        margin-top: 32px;
         max-width: 100%;
       }
 
@@ -280,7 +298,8 @@
     @media (max-width: 760px) and (max-height: 760px) {
       body { padding-block: 24px 32px; }
       h1 { font-size: clamp(66px, 20vw, 96px); margin-bottom: 18px; }
-      .grid { gap: 26px; margin-top: 34px; }
+      .merch-callout { margin-top: 26px; }
+      .grid { gap: 24px; margin-top: 28px; }
       .bottom { margin-top: 34px; }
     }
 
@@ -318,6 +337,13 @@
       <p class="blank-line" aria-hidden="true">&nbsp;</p>
 
       <p>a queer gathering around backgammon: an ancient game of chance, strategy and conversation.</p>
+
+      <p class="merch-callout">
+        <a class="swap" href="merch/chosen-family-hat/">
+          <span class="main">chosen family hat <span class="muted">$25</span></span>
+          <span class="alt">chosen family hat <span class="muted">all profits donated to Black Trans Liberation Kitchen</span></span>
+        </a>
+      </p>
     </div>
 
     <div class="grid">
@@ -328,20 +354,8 @@
         </div>
 
         <div id="events-list">
-          <div class="item muted">loading dates...</div>
+          <div class="item muted">more dates soon</div>
         </div>
-      </section>
-
-      <section>
-        <div class="section-title swap">
-          <span class="main">objects for play</span>
-          <span class="alt">merch</span>
-        </div>
-
-        <a class="item swap" href="merch/chosen-family-hat/">
-          <span class="main">chosen family hat <span class="muted">$25</span></span>
-          <span class="alt">chosen family hat <span class="muted">all profits donated</span></span>
-        </a>
       </section>
     </div>
 
@@ -465,6 +479,12 @@
       };
     }
 
+    function getDateCell(row, index) {
+      if (index < 0 || !row.c[index]) return null;
+      const cell = row.c[index];
+      return parseDate(cell.v) || parseDate(cell.f);
+    }
+
     function dateKey(date) {
       return date.year * 10000 + date.month * 100 + date.day;
     }
@@ -525,7 +545,7 @@
 
     async function loadEvents() {
       try {
-        const response = await fetch(SHEET_URL, { cache: "no-store" });
+        const response = await fetch(`${SHEET_URL}&_=${Date.now()}`, { cache: "no-store" });
         const text = await response.text();
         const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?/);
         if (!match) throw new Error("Could not parse event sheet response");
@@ -544,7 +564,7 @@
 
         const events = data.table.rows
           .map(row => ({
-            date: parseDate(getCell(row, dateCol)),
+            date: getDateCell(row, dateCol),
             venue: getCell(row, venueCol),
             info: getCell(row, infoCol),
             link: getCell(row, linkCol)
