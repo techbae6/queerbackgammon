@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>chosen family hat - queer backgammon</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="chosen family hat by queer backgammon.">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon.png">
+  <link rel="apple-touch-icon" href="../../favicon.png">
+  <style>
+    :root {
+      --bg: #002FA7;
+      --white: #f7f4ee;
+      --soft: rgba(247,244,238,0.52);
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      background: var(--bg);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 28px 42px 44px;
+    }
+
+    a,
+    button {
+      color: var(--white);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    a:hover,
+    button:hover { opacity: 0.68; }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 1px solid var(--white);
+      outline-offset: 5px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 20px;
+      margin-bottom: 34px;
+      font-size: 15.5px;
+    }
+
+    .muted { color: var(--soft); }
+
+    main { width: min(1120px, 100%); }
+
+    .product {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+      gap: clamp(38px, 6vw, 78px);
+      align-items: start;
+    }
+
+    .gallery { min-width: 0; }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border: 1px solid rgba(247,244,238,0.28);
+      background: rgba(247,244,238,0.03);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .slide img,
+    .slide video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .media-placeholder {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 32px;
+      color: var(--soft);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .gallery-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-top: 9px;
+      font-size: 12px;
+      color: var(--soft);
+    }
+
+    .gallery-controls button {
+      border: none;
+      background: transparent;
+      color: var(--white);
+      padding: 6px 0;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .section-title {
+      font-size: 11.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(62px, 8vw, 108px);
+      line-height: 0.77;
+      letter-spacing: -0.105em;
+      font-weight: 950;
+    }
+
+    .price {
+      margin-top: 28px;
+      font-size: 19px;
+    }
+
+    .description {
+      margin-top: 30px;
+      max-width: 430px;
+    }
+
+    .description p {
+      margin: 7px 0;
+      font-size: 15.5px;
+      line-height: 1.3;
+    }
+
+    .donation {
+      margin-top: 31px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(247,244,238,0.24);
+      max-width: 430px;
+      font-size: 15.5px;
+      line-height: 1.3;
+    }
+
+    .buy {
+      display: inline-block;
+      margin-top: 31px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .buy.disabled {
+      color: var(--soft);
+      pointer-events: none;
+      text-decoration-color: var(--soft);
+    }
+
+    .shipping {
+      margin-top: 9px;
+      font-size: 12px;
+      color: var(--soft);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .slide { transition: none; }
+    }
+
+    @media (max-width: 760px) {
+      body { padding: 24px; }
+      .product { grid-template-columns: 1fr; gap: 34px; }
+      h1 { font-size: clamp(62px, 20vw, 94px); }
+    }
+
+    @media (max-width: 420px) {
+      body { padding: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top">
+    <a href="../../">queer backgammon</a>
+    <span class="muted">objects for play</span>
+  </div>
+
+  <main>
+    <div class="product">
+      <section class="gallery" aria-label="chosen family hat photos">
+        <div class="stage" id="stage">
+          <div class="slide active" data-media="hat-01.jpg">
+            <img src="hat-01.jpg" alt="chosen family hat front view">
+          </div>
+
+          <div class="slide" data-media="hat-02-glasses.jpg">
+            <img src="hat-02-glasses.jpg" alt="chosen family hat worn outside">
+          </div>
+
+          <div class="slide" data-media="hat-flipbook.mov">
+            <video src="hat-flipbook.mov" muted loop playsinline controls preload="metadata"></video>
+          </div>
+
+          <div class="media-placeholder" id="placeholder" hidden>
+            hat photos coming soon
+          </div>
+        </div>
+
+        <div class="gallery-controls" id="gallery-controls">
+          <button type="button" id="previous">previous</button>
+          <span id="counter">1 / 3</span>
+          <button type="button" id="next">next</button>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">queer backgammon</div>
+
+        <h1>chosen<br>family hat</h1>
+
+        <div class="price">$25</div>
+
+        <div class="description">
+          <p>handwritten queer backgammon logo embroidered on the front.</p>
+          <p>backgammon image logo embroidered on the back.</p>
+        </div>
+
+        <div class="donation">
+          all profits donated to <a href="https://www.blacktransliberation.com/" target="_blank" rel="noopener">Black Trans Liberation Kitchen</a>.
+        </div>
+
+        <!-- Replace # with the live Stripe Payment Link once Stripe approves the account. -->
+        <a class="buy disabled" id="buy-hat" href="#" aria-disabled="true">buy hat</a>
+
+        <div class="shipping">checkout opening soon - $7 shipping</div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const allSlides = Array.from(document.querySelectorAll(".slide"));
+    const controls = document.getElementById("gallery-controls");
+    const counter = document.getElementById("counter");
+    const previous = document.getElementById("previous");
+    const next = document.getElementById("next");
+    const placeholder = document.getElementById("placeholder");
+    let current = 0;
+
+    function availableSlides() {
+      return allSlides.filter(slide => !slide.dataset.missing);
+    }
+
+    function refreshGallery() {
+      const slides = availableSlides();
+
+      if (!slides.length) {
+        placeholder.hidden = false;
+        controls.hidden = true;
+        return;
+      }
+
+      placeholder.hidden = true;
+      controls.hidden = slides.length <= 1;
+      current = Math.min(current, slides.length - 1);
+
+      allSlides.forEach(slide => slide.classList.remove("active"));
+      slides[current].classList.add("active");
+      counter.textContent = `${current + 1} / ${slides.length}`;
+    }
+
+    document.querySelectorAll(".slide img").forEach(img => {
+      img.addEventListener("error", () => {
+        img.closest(".slide").dataset.missing = "true";
+        refreshGallery();
+      });
+    });
+
+    document.querySelectorAll(".slide video").forEach(video => {
+      video.addEventListener("error", () => {
+        video.closest(".slide").dataset.missing = "true";
+        refreshGallery();
+      });
+    });
+
+    function showSlide(index) {
+      const slides = availableSlides();
+      if (!slides.length) return;
+
+      current = (index + slides.length) % slides.length;
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === current);
+        const video = slide.querySelector("video");
+        if (video && i !== current) video.pause();
+      });
+
+      counter.textContent = `${current + 1} / ${slides.length}`;
+    }
+
+    previous.addEventListener("click", () => showSlide(current - 1));
+    next.addEventListener("click", () => showSlide(current + 1));
+    refreshGallery();
+  </script>
+</body>
+</html>
