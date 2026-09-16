@@ -1,2 +1,1 @@
-# queerbackgammon
-website for queer backgammon
+queer backgammon
