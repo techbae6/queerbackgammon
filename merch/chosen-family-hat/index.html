@@ -120,19 +120,16 @@
       border:1px solid rgba(247,244,238,.25);
       background:rgba(247,244,238,.025);
     }
-    .stage img,.stage video {
+    .stage video {
       position:absolute;
       inset:0;
       width:100%;
       height:100%;
       display:block;
       object-fit:cover;
-      transition:opacity .35s ease,transform .8s cubic-bezier(.2,.75,.2,1);
+      background:var(--bg);
+      transition:transform .8s cubic-bezier(.2,.75,.2,1), opacity .35s ease;
     }
-    .stage img { z-index:0; }
-    .stage video { z-index:1; opacity:0; background:var(--bg); }
-    .stage.ready video { opacity:1; }
-    .stage.ready img { opacity:0; }
     @media (hover:hover) and (pointer:fine) { .stage.ready:hover video { transform:scale(1.012); } }
 
     .video-control {
@@ -194,6 +191,36 @@
     .credits a { color:var(--white); }
 
     .buy-wrap { margin-top:30px; }
+    .quantity-row {
+      display:flex;
+      align-items:center;
+      gap:13px;
+      margin-bottom:14px;
+      color:var(--soft);
+      font-size:12px;
+      line-height:1;
+    }
+    .quantity-control {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:var(--white);
+    }
+    .quantity-control button {
+      width:24px;
+      height:24px;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(247,244,238,.34);
+      border-radius:50%;
+      background:transparent;
+      color:var(--white);
+      padding:0;
+      line-height:1;
+      cursor:pointer;
+    }
+    .quantity-control button:disabled { opacity:.32; cursor:default; }
+    .quantity-value { min-width:1.4em; text-align:center; color:var(--white); font-size:14px; }
     .buy {
       display:inline-flex;
       align-items:baseline;
@@ -272,6 +299,7 @@
       .description { margin-top:23px; }
       .buy-wrap { margin-top:27px; }
       .video-control { min-width:42px; min-height:34px; }
+      .quantity-control button { width:30px; height:30px; }
     }
   </style>
 </head>
@@ -286,9 +314,8 @@
 
   <main>
     <div class="product">
-      <section class="media-column reveal" aria-label="chosen family hat media">
+      <section class="media-column reveal" aria-label="chosen family hat video">
         <div class="stage" id="video-stage">
-          <img src="hat-photo.jpg" alt="burgundy chosen family hat with turquoise queer backgammon embroidery">
           <video id="hat-video" autoplay muted loop playsinline preload="metadata" aria-label="chosen family hat rotating product video">
             <source src="chosen-family-hat.mp4" type="video/mp4">
           </video>
@@ -307,7 +334,7 @@
         </div>
 
         <div class="description">
-          <p>embroidered cap to play backgammon out in the sun (park).</p>
+          <p>embroidered cap to play backgammon at the park.</p>
         </div>
 
         <div class="credits">
@@ -315,7 +342,15 @@
         </div>
 
         <div class="buy-wrap">
-          <a class="buy disabled" id="buy-hat" href="#" aria-disabled="true" tabindex="-1">buy hat</a>
+          <div class="quantity-row">
+            <span>quantity</span>
+            <div class="quantity-control" aria-label="hat quantity">
+              <button id="quantity-minus" type="button" aria-label="decrease quantity">−</button>
+              <span class="quantity-value" id="quantity-value" aria-live="polite">1</span>
+              <button id="quantity-plus" type="button" aria-label="increase quantity">+</button>
+            </div>
+          </div>
+          <a class="buy disabled" id="buy-hat" href="#" aria-disabled="true" tabindex="-1">buy 1 hat</a>
           <div class="shipping">checkout opening soon - $7 shipping</div>
         </div>
       </section>
@@ -386,6 +421,30 @@
 
       sync();
     }
+
+    const minus = document.getElementById("quantity-minus");
+    const plus = document.getElementById("quantity-plus");
+    const value = document.getElementById("quantity-value");
+    const buy = document.getElementById("buy-hat");
+    let quantity = 1;
+
+    const updateQuantity = () => {
+      value.textContent = String(quantity);
+      buy.textContent = quantity === 1 ? "buy 1 hat" : `buy ${quantity} hats`;
+      minus.disabled = quantity === 1;
+    };
+
+    minus.addEventListener("click", () => {
+      if (quantity > 1) quantity -= 1;
+      updateQuantity();
+    });
+
+    plus.addEventListener("click", () => {
+      quantity += 1;
+      updateQuantity();
+    });
+
+    updateQuantity();
   })();
   </script>
 </body>
