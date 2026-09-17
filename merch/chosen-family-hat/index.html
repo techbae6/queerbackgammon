@@ -10,36 +10,146 @@
   <link rel="apple-touch-icon" href="../../favicon.png">
   <style>
     :root{--bg:#002FA7;--logo:#001EFF;--white:#f7f4ee;--soft:rgba(247,244,238,.53);--softer:rgba(247,244,238,.36)}
-    *{box-sizing:border-box}html{height:100%;background:var(--bg);overflow:hidden}body{margin:0;height:100svh;overflow:hidden;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif;padding:28px 42px;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}::selection{color:var(--bg);background:var(--white)}a,button{color:inherit;font:inherit}a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;transition:opacity .18s ease}a:focus-visible,button:focus-visible{outline:1px solid var(--white);outline-offset:5px}@media(hover:hover) and (pointer:fine){a:hover{opacity:.68}}
-    .ambient-logo{position:fixed;z-index:0;right:-8vw;bottom:-14vw;width:min(58vw,640px);height:min(58vw,640px);background:var(--logo);-webkit-mask:url("../../logo.png") center/contain no-repeat;mask:url("../../logo.png") center/contain no-repeat;opacity:.13;pointer-events:none;transform:rotate(10deg);animation:logoIn 1.45s cubic-bezier(.16,1,.3,1) both}@keyframes logoIn{from{opacity:0;transform:translateY(10px) rotate(10deg) scale(.988)}to{opacity:.13;transform:translateY(0) rotate(10deg) scale(1)}}
-    .reveal,.piece{opacity:0;transform:translateY(9px);animation:enter .78s cubic-bezier(.16,1,.3,1) forwards}@keyframes enter{to{opacity:1;transform:none}}.media-column{animation-delay:.04s}.title-block{animation-delay:.10s}.donation{animation-delay:.18s}.buy-wrap{animation-delay:.26s}.description{animation-delay:.34s}.credits{animation-delay:.40s}
-    main{position:relative;z-index:2;width:min(1120px,100%);height:100%;margin:0 auto}.product{height:100%;display:grid;grid-template-columns:minmax(260px,360px) minmax(0,1fr);gap:clamp(48px,6vw,88px);align-items:center}.media-column,.details{min-width:0}
-    .stage{position:relative;width:100%;max-height:calc(100svh - 56px);aspect-ratio:480/854;overflow:hidden;background:transparent}.stage video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;object-position:center bottom;background:var(--bg);transition:transform .8s cubic-bezier(.16,1,.3,1)}@media(hover:hover) and (pointer:fine){.stage.ready:hover video{transform:scale(1.004)}}.video-control{position:absolute;z-index:3;left:12px;bottom:10px;border:0;border-bottom:1px solid rgba(247,244,238,.42);background:transparent;color:rgba(247,244,238,.68);padding:3px 0;font-size:11px;cursor:pointer}.stage:not(.ready) .video-control{display:none}
-    .details{max-width:610px}.eyebrow{margin-bottom:16px;color:var(--soft);font-size:11px;letter-spacing:.18em;line-height:1;text-transform:uppercase}.eyebrow a{text-decoration:none;color:inherit}.eyebrow a:hover{opacity:.8}h1{margin:0;max-width:560px;font-size:clamp(54px,6.25vw,88px);line-height:.82;letter-spacing:-.08em;font-weight:950}
-    .donation{max-width:610px;margin-top:29px;font-size:clamp(32px,3.1vw,46px);line-height:.99;letter-spacing:-.045em;font-weight:850}.donation span,.donation a{display:block}.donation span{color:rgba(247,244,238,.60);font-weight:650}.donation a{margin-top:5px;color:var(--white);text-decoration:none}@media(hover:hover) and (pointer:fine){.donation a:hover{opacity:.72}}
-    .buy-wrap{margin-top:27px;width:max-content;min-width:220px}.price{margin-bottom:7px;color:rgba(247,244,238,.88);font-size:17px}.buy-row{display:flex;align-items:center;gap:16px}.buy{display:inline-flex;align-items:baseline;font-size:24px;font-weight:700;line-height:1.05}.quantity-control{display:inline-flex;align-items:center;gap:10px}.quantity-control button{border:0;background:transparent;color:var(--white);padding:0;font-size:19px;line-height:1;cursor:pointer;opacity:.68;transition:opacity .16s ease,transform .16s ease}.quantity-control button:disabled{opacity:.22;cursor:default}@media(hover:hover) and (pointer:fine){.quantity-control button:not(:disabled):hover{opacity:1;transform:translateY(-1px)}}.shipping{margin-top:9px;color:var(--soft);font-size:12px;line-height:1.35}.secure{margin-top:2px;color:var(--softer);font-size:12px;line-height:1.35}
-    .description,.credits{max-width:520px}.description{margin-top:28px;color:rgba(247,244,238,.82)}.credits{margin-top:12px;color:var(--soft)}.description p,.credits p{margin:0;font-size:14.5px;line-height:1.42}.description p{font-weight:700}.artist-link{display:inline-grid;vertical-align:baseline;text-decoration:none;color:inherit}.artist-link span{grid-area:1/1;white-space:nowrap}.artist-link .alt{opacity:0}.artist-link .main,.artist-link .alt{transition:opacity .16s ease}@media(hover:hover) and (pointer:fine){.artist-link:hover{opacity:1;color:var(--white)}.artist-link:hover .main{opacity:0}.artist-link:hover .alt{opacity:1}}
-    .dice{display:none;position:fixed;z-index:9999;left:0;top:0;width:14px;height:14px;border:1px solid rgba(247,244,238,.72);border-radius:3px;pointer-events:none;opacity:.82;transform:translate(-50%,-50%);animation:spin 4.8s linear infinite}.dice::before{content:"";position:absolute;width:2px;height:2px;left:50%;top:50%;border-radius:50%;background:var(--white);transform:translate(-50%,-50%);box-shadow:-4px -4px 0 var(--white),4px 4px 0 var(--white)}@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}@media(hover:hover) and (pointer:fine){html.has-dice,html.has-dice body,html.has-dice a,html.has-dice button{cursor:none}html.has-dice .dice{display:block}}
+    *{box-sizing:border-box}
+    html{height:100%;background:var(--bg);overflow:hidden}
+    body{margin:0;height:100svh;overflow:hidden;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif;padding:24px 40px 26px;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;display:grid;grid-template-rows:auto 1fr auto;gap:18px}
+    ::selection{color:var(--bg);background:var(--white)}
+    a,button{color:inherit;font:inherit}
+    a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;transition:opacity .18s ease}
+    a:focus-visible,button:focus-visible{outline:1px solid var(--white);outline-offset:5px}
+    @media(hover:hover) and (pointer:fine){a:hover{opacity:.68}}
+
+    .ambient-logo{position:fixed;z-index:0;right:-8vw;bottom:-14vw;width:min(58vw,640px);height:min(58vw,640px);background:var(--logo);-webkit-mask:url("../../logo.png") center/contain no-repeat;mask:url("../../logo.png") center/contain no-repeat;opacity:.13;pointer-events:none;transform:rotate(10deg);animation:logoIn 1.45s cubic-bezier(.16,1,.3,1) both}
+    @keyframes logoIn{from{opacity:0;transform:translateY(10px) rotate(10deg) scale(.988)}to{opacity:.13;transform:translateY(0) rotate(10deg) scale(1)}}
+    .reveal,.piece{opacity:0;transform:translateY(9px);animation:enter .78s cubic-bezier(.16,1,.3,1) forwards}
+    @keyframes enter{to{opacity:1;transform:none}}
+    .site-header{animation-delay:.02s}.media-column{animation-delay:.07s}.title-block{animation-delay:.13s}.donation{animation-delay:.20s}.buy-wrap{animation-delay:.27s}.description{animation-delay:.34s}.credits{animation-delay:.40s}.site-footer{animation-delay:.46s}
+
+    .site-header,.site-footer,main{position:relative;z-index:2;width:min(1120px,100%);margin-inline:auto}
+    .site-title{display:inline-block;font-size:29px;line-height:.88;letter-spacing:-.06em;font-weight:950;text-decoration:none}
+    .site-title span{display:block}
+
+    main{min-height:0}
+    .product{height:100%;display:grid;grid-template-columns:minmax(250px,350px) minmax(0,1fr);gap:clamp(46px,6vw,84px);align-items:center}
+    .media-column,.details{min-width:0}
+    .stage{position:relative;width:100%;max-height:calc(100svh - 150px);aspect-ratio:480/854;overflow:hidden;background:transparent}
+    .stage video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;object-position:center bottom;background:var(--bg);transition:transform .8s cubic-bezier(.16,1,.3,1)}
+    @media(hover:hover) and (pointer:fine){.stage.ready:hover video{transform:scale(1.004)}}
+    .video-control{position:absolute;z-index:3;left:12px;bottom:10px;border:0;border-bottom:1px solid rgba(247,244,238,.42);background:transparent;color:rgba(247,244,238,.68);padding:3px 0;font-size:11px;cursor:pointer}
+    .stage:not(.ready) .video-control{display:none}
+
+    .details{max-width:610px}
+    .eyebrow{margin-bottom:12px;color:var(--soft);font-size:11px;letter-spacing:.18em;line-height:1;text-transform:uppercase}
+    .eyebrow a{text-decoration:none;color:inherit}
+    h1{margin:0;max-width:560px;font-size:clamp(52px,5.9vw,82px);line-height:.82;letter-spacing:-.08em;font-weight:950}
+    .donation{max-width:610px;margin-top:24px;font-size:clamp(30px,2.85vw,43px);line-height:.99;letter-spacing:-.045em;font-weight:850}
+    .donation span,.donation a{display:block}
+    .donation span{color:rgba(247,244,238,.60);font-weight:650}
+    .donation a{margin-top:4px;color:var(--white);text-decoration:none}
+
+    .buy-wrap{margin-top:23px;width:max-content;min-width:220px}
+    .price{margin-bottom:7px;color:rgba(247,244,238,.88);font-size:17px}
+    .buy-row{display:flex;align-items:center;gap:16px}
+    .buy{display:inline-flex;align-items:baseline;font-size:24px;font-weight:700;line-height:1.05}
+    .quantity-control{display:inline-flex;align-items:center;gap:10px}
+    .quantity-control button{border:0;background:transparent;color:var(--white);padding:0;font-size:19px;line-height:1;cursor:pointer;opacity:.68;transition:opacity .16s ease,transform .16s ease}
+    .quantity-control button:disabled{opacity:.22;cursor:default}
+    @media(hover:hover) and (pointer:fine){.quantity-control button:not(:disabled):hover{opacity:1;transform:translateY(-1px)}}
+    .shipping{margin-top:9px;color:var(--soft);font-size:12px;line-height:1.35}
+    .secure{margin-top:2px;color:var(--softer);font-size:12px;line-height:1.35}
+
+    .description,.credits{max-width:520px}
+    .description{margin-top:24px;color:rgba(247,244,238,.82)}
+    .credits{margin-top:10px;color:var(--soft)}
+    .description p,.credits p{margin:0;font-size:14.5px;line-height:1.42}
+    .description p{font-weight:700}
+    .artist-link{display:inline-grid;vertical-align:baseline;text-decoration:none;color:inherit}
+    .artist-link span{grid-area:1/1;white-space:nowrap}
+    .artist-link .alt{opacity:0}
+    .artist-link .main,.artist-link .alt{transition:opacity .16s ease}
+    @media(hover:hover) and (pointer:fine){.artist-link:hover{opacity:1;color:var(--white)}.artist-link:hover .main{opacity:0}.artist-link:hover .alt{opacity:1}}
+
+    .site-footer{align-self:end;color:var(--soft);font-size:12px;line-height:1.3}
+    .site-footer .contact{margin:0 0 6px;font-size:15px}
+    .swap{display:inline-grid;vertical-align:baseline;max-width:100%}
+    .swap>span{grid-area:1/1;transition:opacity .16s ease}
+    .swap .alt{opacity:0}
+    @media(hover:hover) and (pointer:fine){.swap:hover .main,.swap:focus-visible .main{opacity:0}.swap:hover .alt,.swap:focus-visible .alt{opacity:1}}
+
+    .dice{display:none;position:fixed;z-index:9999;left:0;top:0;width:14px;height:14px;border:1px solid rgba(247,244,238,.72);border-radius:3px;pointer-events:none;opacity:.82;transform:translate(-50%,-50%);animation:spin 4.8s linear infinite}
+    .dice::before{content:"";position:absolute;width:2px;height:2px;left:50%;top:50%;border-radius:50%;background:var(--white);transform:translate(-50%,-50%);box-shadow:-4px -4px 0 var(--white),4px 4px 0 var(--white)}
+    @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+    @media(hover:hover) and (pointer:fine){html.has-dice,html.has-dice body,html.has-dice a,html.has-dice button{cursor:none}html.has-dice .dice{display:block}}
+
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}.reveal,.piece{opacity:1;transform:none}}
-    @media(max-width:820px),(pointer:coarse){html{height:auto;overflow-x:hidden;overflow-y:auto}body{height:auto;min-height:100svh;overflow-x:hidden;overflow-y:auto;padding:20px 20px 36px}.dice{display:none!important}main{height:auto}.product{height:auto;grid-template-columns:1fr;gap:24px;align-items:start}.media-column{width:100%;margin:0}.stage{width:100%;height:clamp(190px,42vw,270px);max-height:none;aspect-ratio:auto}.stage video{object-fit:cover;object-position:center bottom}.details{max-width:100%}h1{font-size:clamp(58px,16vw,84px);max-width:100%}.donation,.description,.credits{max-width:100%}.ambient-logo{right:-17vw;bottom:-4vw;width:min(78vw,390px);height:min(78vw,390px);opacity:.10}.artist-link .main{opacity:1}.artist-link .alt{opacity:0}.buy-wrap{margin:22px 0 0 auto;width:max-content;min-width:205px;padding-bottom:82px;text-align:left}.price{font-size:16px}.shipping,.secure{max-width:220px}.description{margin-top:22px}.credits{margin-top:10px}}
-    @media(max-width:520px){body{padding:18px 18px 34px}.product{gap:21px}.stage{height:clamp(170px,52vw,215px)}h1{font-size:clamp(54px,16.5vw,76px)}.donation{margin-top:22px;font-size:clamp(29px,8.5vw,37px)}.buy-wrap{margin-top:20px;min-width:198px;padding-bottom:88px}.buy{font-size:23px}.description{margin-top:20px}.description p,.credits p{font-size:14px;line-height:1.45}.video-control{min-width:42px;min-height:34px}.quantity-control button{font-size:21px}}
+
+    @media(max-width:820px),(pointer:coarse){
+      html{height:auto;overflow-x:hidden;overflow-y:auto}
+      body{height:auto;min-height:100svh;overflow-x:hidden;overflow-y:auto;padding:20px 20px 34px;display:block}
+      .dice{display:none!important}
+      .site-header{margin-bottom:22px}.site-title{font-size:27px}
+      main{height:auto}.product{height:auto;grid-template-columns:1fr;gap:20px;align-items:start}
+      .media-column{width:100%;margin:0}.stage{width:100%;height:clamp(185px,46vw,250px);max-height:none;aspect-ratio:auto}.stage video{object-fit:cover;object-position:center bottom}
+      .details{max-width:100%}h1{font-size:clamp(58px,16vw,84px);max-width:100%}.donation,.description,.credits{max-width:100%}
+      .ambient-logo{right:-17vw;bottom:-4vw;width:min(78vw,390px);height:min(78vw,390px);opacity:.10}
+      .artist-link .main{opacity:1}.artist-link .alt{opacity:0}
+      .buy-wrap{margin:20px 0 0 auto;width:max-content;min-width:205px;text-align:left}.price{font-size:16px}.shipping,.secure{max-width:220px}
+      .description{margin-top:23px}.credits{margin-top:10px}
+      .site-footer{margin-top:46px;padding-bottom:24px}
+    }
+    @media(max-width:520px){
+      body{padding:18px 18px 32px}.site-header{margin-bottom:18px}.site-title{font-size:26px}
+      .product{gap:18px}.stage{height:clamp(170px,50vw,210px)}
+      h1{font-size:clamp(54px,16.5vw,76px)}.donation{margin-top:20px;font-size:clamp(29px,8.5vw,37px)}
+      .buy-wrap{margin-top:18px;min-width:198px}.buy{font-size:23px}.description{margin-top:22px}
+      .description p,.credits p{font-size:14px;line-height:1.45}.video-control{min-width:42px;min-height:34px}.quantity-control button{font-size:21px}
+      .site-footer{margin-top:50px;padding-bottom:30px}
+    }
+    @media(max-height:700px) and (min-width:821px){html,body{height:auto;min-height:100%;overflow:auto}body{display:block}.site-header{margin-bottom:18px}.product{min-height:620px}.site-footer{margin-top:24px;padding-bottom:20px}}
   </style>
 </head>
 <body>
-  <div class="ambient-logo" aria-hidden="true"></div><div class="dice" id="dice" aria-hidden="true"></div>
-  <main><div class="product">
-    <section class="media-column reveal" aria-label="chosen family hat video"><div class="stage" id="video-stage"><video id="hat-video" autoplay muted loop playsinline preload="metadata" aria-label="chosen family hat rotating product video"><source src="chosen-family-hat.mp4" type="video/mp4"></video><button class="video-control" id="video-control" type="button" hidden>pause</button></div></section>
-    <section class="details">
-      <div class="title-block piece"><div class="eyebrow"><a href="../../">queer backgammon</a></div><h1>chosen<br>family hat</h1></div>
-      <div class="donation piece"><span>all profits donated to</span><a href="https://www.blacktransliberation.com/" target="_blank" rel="noopener">Black Trans Liberation Kitchen.</a></div>
-      <div class="buy-wrap piece"><div class="price" id="price-line">$25</div><div class="buy-row"><a class="buy" id="buy-hat" href="https://buy.stripe.com/7sY9ASfUZ4OX7um5qAbQY01">buy hat</a><div class="quantity-control" aria-label="hat quantity"><button id="quantity-minus" type="button" aria-label="decrease quantity">−</button><button id="quantity-plus" type="button" aria-label="increase quantity">+</button></div></div><div class="shipping">standard US shipping · $7</div><div class="secure">secure checkout by Stripe</div></div>
-      <div class="description piece"><p>embroidered cap to play backgammon in the sun.</p></div>
-      <div class="credits piece"><p>hand drawn lettering by <a class="artist-link" href="https://www.instagram.com/dannavision/" target="_blank" rel="noopener"><span class="main">Danna Feintuch</span><span class="alt">@dannavision</span></a>. logo in the back is illustrated by our very own eve of queer backgammon.</p></div>
-    </section>
-  </div></main>
+  <div class="ambient-logo" aria-hidden="true"></div>
+  <div class="dice" id="dice" aria-hidden="true"></div>
+
+  <header class="site-header reveal">
+    <a class="site-title" href="../../" aria-label="queer backgammon home"><span>queer</span><span>backgammon</span></a>
+  </header>
+
+  <main>
+    <div class="product">
+      <section class="media-column reveal" aria-label="chosen family hat video">
+        <div class="stage" id="video-stage">
+          <video id="hat-video" autoplay muted loop playsinline preload="metadata" aria-label="chosen family hat rotating product video"><source src="chosen-family-hat.mp4" type="video/mp4"></video>
+          <button class="video-control" id="video-control" type="button" hidden>pause</button>
+        </div>
+      </section>
+
+      <section class="details">
+        <div class="title-block piece"><div class="eyebrow"><a href="../../">queer backgammon</a></div><h1>chosen<br>family hat</h1></div>
+        <div class="donation piece"><span>all profits donated to</span><a href="https://www.blacktransliberation.com/" target="_blank" rel="noopener">Black Trans Liberation Kitchen.</a></div>
+        <div class="buy-wrap piece">
+          <div class="price" id="price-line">$25</div>
+          <div class="buy-row"><a class="buy" id="buy-hat" href="https://buy.stripe.com/7sY9ASfUZ4OX7um5qAbQY01">buy hat</a><div class="quantity-control" aria-label="hat quantity"><button id="quantity-minus" type="button" aria-label="decrease quantity">−</button><button id="quantity-plus" type="button" aria-label="increase quantity">+</button></div></div>
+          <div class="shipping">standard US shipping · $7</div>
+          <div class="secure">secure checkout by Stripe</div>
+        </div>
+        <div class="description piece"><p>embroidered cap to play backgammon in the sun.</p></div>
+        <div class="credits piece"><p>hand drawn lettering by <a class="artist-link" href="https://www.instagram.com/dannavision/" target="_blank" rel="noopener"><span class="main">Danna Feintuch</span><span class="alt">@dannavision</span></a>. logo in the back is illustrated by our very own eve of queer backgammon.</p></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer reveal">
+    <p class="contact"><a class="swap" href="mailto:hello@queerbackgammon.com"><span class="main">contact</span><span class="alt">hello@queerbackgammon.com</span></a></p>
+    <div>est. nyc - roll: <span id="roll">3</span></div>
+  </footer>
+
   <script>
   (()=>{
-    const root=document.documentElement,dice=document.getElementById('dice'),video=document.getElementById('hat-video'),stage=document.getElementById('video-stage'),control=document.getElementById('video-control'),fine=matchMedia('(hover: hover) and (pointer: fine)').matches;if(fine&&dice){root.classList.add('has-dice');addEventListener('pointermove',e=>{dice.style.left=e.clientX+'px';dice.style.top=e.clientY+'px'},{passive:true})}
+    const root=document.documentElement,dice=document.getElementById('dice'),roll=document.getElementById('roll'),video=document.getElementById('hat-video'),stage=document.getElementById('video-stage'),control=document.getElementById('video-control'),fine=matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if(roll)roll.textContent=String(Math.floor(Math.random()*6)+1);
+    if(fine&&dice){root.classList.add('has-dice');addEventListener('pointermove',e=>{dice.style.left=e.clientX+'px';dice.style.top=e.clientY+'px'},{passive:true})}
     if(video&&stage&&control){const sync=()=>{control.textContent=video.paused?'play':'pause';control.setAttribute('aria-label',video.paused?'play hat video':'pause hat video')};const play=async()=>{try{await video.play()}catch(e){}sync()};video.addEventListener('loadeddata',()=>{stage.classList.add('ready');control.hidden=false;play()});video.addEventListener('canplay',()=>{stage.classList.add('ready');control.hidden=false});video.addEventListener('play',sync);video.addEventListener('pause',sync);video.addEventListener('error',()=>{stage.classList.remove('ready');control.hidden=true});control.addEventListener('click',async()=>{video.paused?await play():video.pause();sync()});document.addEventListener('visibilitychange',()=>{if(document.hidden&&!video.paused){video.dataset.resume='1';video.pause()}else if(!document.hidden&&video.dataset.resume==='1'){delete video.dataset.resume;play()}});sync()}
     const links={1:'https://buy.stripe.com/7sY9ASfUZ4OX7um5qAbQY01',2:'https://buy.stripe.com/28E00igZ3dlt01U5qAbQY02',3:'https://buy.stripe.com/dRm28qgZ3ftB3e6g5ebQY03',4:'https://buy.stripe.com/7sY28q2496X5cOG3isbQY04',5:'https://buy.stripe.com/14A28qeQV5T19Cu6uEbQY05',6:'https://buy.stripe.com/6oU6oG4ch1CLbKC4mwbQY06',7:'https://buy.stripe.com/fZu00i249epx5mef1abQY07',8:'https://buy.stripe.com/4gM4gy105ftBdSKaKUbQY08',9:'https://buy.stripe.com/14AaEWbEJ6X515Y1akbQY09',10:'https://buy.stripe.com/3cIeVc38d2GP3e61akbQY0a'};
     let quantity=1;const minus=document.getElementById('quantity-minus'),plus=document.getElementById('quantity-plus'),buy=document.getElementById('buy-hat'),price=document.getElementById('price-line');const renderQuantity=()=>{minus.disabled=quantity<=1;plus.disabled=quantity>=10;buy.textContent=quantity===1?'buy hat':`buy ${quantity} hats`;buy.href=links[quantity];price.textContent=quantity===1?'$25':`$${quantity*25}`};minus.addEventListener('click',()=>{if(quantity>1){quantity--;renderQuantity()}});plus.addEventListener('click',()=>{if(quantity<10){quantity++;renderQuantity()}});renderQuantity();
