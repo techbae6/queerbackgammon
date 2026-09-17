@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>test checkout - queer backgammon</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#002FA7">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <style>
+    :root{--bg:#002FA7;--white:#f7f4ee;--soft:rgba(247,244,238,.53);--faint:rgba(247,244,238,.25)}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100svh;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif;padding:24px 40px 42px;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+    .wrap{width:min(760px,100%);margin:0 auto}
+    .brand{display:inline-block;font-size:25px;line-height:.9;letter-spacing:-.055em;font-weight:950;text-decoration:none;margin-bottom:58px}.brand span{display:block}
+    .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-bottom:14px}
+    h1{margin:0;font-size:clamp(54px,8vw,92px);line-height:.84;letter-spacing:-.085em}
+    .note{margin:20px 0 34px;max-width:520px;color:var(--soft);font-size:14px;line-height:1.45}
+    form{display:grid;gap:18px;max-width:560px}
+    label{display:grid;gap:6px;font-size:12px;color:var(--soft)}
+    input{width:100%;border:0;border-bottom:1px solid var(--faint);border-radius:0;background:transparent;color:var(--white);font:inherit;font-size:16px;padding:8px 0 9px;outline:none}
+    input:focus{border-bottom-color:var(--white)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .summary{margin-top:10px;padding-top:18px;border-top:1px solid var(--faint);display:flex;justify-content:space-between;gap:20px;font-size:14px}.summary .muted{color:var(--soft)}
+    button{margin-top:8px;width:fit-content;border:0;background:transparent;color:var(--white);padding:0;font:inherit;font-size:24px;font-weight:700;text-decoration:underline;text-underline-offset:5px;cursor:pointer}
+    .fine{margin-top:16px;color:var(--soft);font-size:12px;line-height:1.4}
+    footer{margin-top:64px;color:var(--soft);font-size:12px}
+    @media(max-width:640px){body{padding:20px 18px 36px}.brand{margin-bottom:42px}.row{grid-template-columns:1fr}h1{font-size:clamp(52px,17vw,76px)}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <a class="brand" href="../../" aria-label="queer backgammon home"><span>queer</span><span>backgammon</span></a>
+    <div class="eyebrow">private test mode · no charge</div>
+    <h1>test the hat flow</h1>
+    <p class="note">this is a mock checkout so you can try the site flow without paying. nothing entered here is sent anywhere or stored.</p>
+
+    <form id="test-form">
+      <label>name<input required autocomplete="name" placeholder="your name"></label>
+      <label>email<input required type="email" autocomplete="email" placeholder="you@example.com"></label>
+      <label>shipping address<input required autocomplete="street-address" placeholder="street address"></label>
+      <div class="row">
+        <label>city<input required autocomplete="address-level2" placeholder="city"></label>
+        <label>zip<input required inputmode="numeric" autocomplete="postal-code" placeholder="zip"></label>
+      </div>
+      <div class="summary"><span><span id="qty">1</span> chosen family hat<span id="plural"></span><br><span class="muted">standard US shipping</span></span><span id="total">$32</span></div>
+      <button type="submit">complete test order</button>
+    </form>
+    <p class="fine">this does not test Stripe, charge a card, send a receipt, or create a real order. it only tests the QBG page flow and thank-you page.</p>
+    <footer><a href="mailto:hello@queerbackgammon.com">hello@queerbackgammon.com</a></footer>
+  </main>
+  <script>
+    const params=new URLSearchParams(location.search);let qty=Math.max(1,Math.min(10,parseInt(params.get('qty')||'1',10)||1));
+    document.getElementById('qty').textContent=qty;document.getElementById('plural').textContent=qty===1?'':'s';document.getElementById('total').textContent=`$${qty*25+7}`;
+    document.getElementById('test-form').addEventListener('submit',e=>{e.preventDefault();location.href='../thank-you/?test=1';});
+  </script>
+</body>
+</html>
