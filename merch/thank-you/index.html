@@ -22,20 +22,21 @@
     @keyframes logoIn{from{opacity:0;transform:translateY(10px) rotate(10deg) scale(.988)}to{opacity:.14;transform:translateY(0) rotate(10deg) scale(1)}}
     .reveal{opacity:0;transform:translateY(10px);animation:enter .82s cubic-bezier(.16,1,.3,1) forwards}
     @keyframes enter{to{opacity:1;transform:none}}
-    .site-header{animation-delay:.03s}.thank-you{animation-delay:.12s}.site-footer{animation-delay:.24s}
+    .site-header{animation-delay:.03s}.thank-you{animation-delay:.12s}.site-footer{animation-delay:.28s}
 
     .site-header,.site-footer,main{position:relative;z-index:2;width:min(1120px,100%);margin-inline:auto}
     .site-title{display:inline-block;font-size:29px;line-height:.88;letter-spacing:-.06em;font-weight:950;text-decoration:none}
     .site-title span{display:block}
 
     main{display:flex;align-items:center}
-    .thank-you{max-width:760px;padding:5vh 0 8vh}
+    .thank-you{max-width:790px;padding:5vh 0 8vh}
     .eyebrow{margin-bottom:18px;color:var(--soft);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
-    h1{margin:0;max-width:720px;font-size:clamp(62px,8vw,112px);line-height:.82;letter-spacing:-.09em;font-weight:950}
+    h1{margin:0;max-width:760px;font-size:clamp(62px,8vw,112px);line-height:.82;letter-spacing:-.09em;font-weight:950}
     .lead{margin:28px 0 0;max-width:620px;font-size:22px;line-height:1.2;letter-spacing:-.025em}
-    .info{margin-top:28px;max-width:560px;color:var(--soft);font-size:15px;line-height:1.42}
+    .kicker{margin:11px 0 0;max-width:620px;color:var(--soft);font-size:17px;line-height:1.28}
+    .info{margin-top:31px;max-width:560px;color:var(--soft);font-size:15px;line-height:1.42}
     .info p{margin:7px 0}
-    .home-link{display:inline-block;margin-top:24px;font-size:15px}
+    .home-link{display:inline-block;margin-top:25px;font-size:15px}
 
     .site-footer{align-self:end;color:var(--soft);font-size:12px;line-height:1.3}
     .site-footer .contact{margin:0 0 6px;font-size:15px}
@@ -45,8 +46,8 @@
     @media(hover:hover) and (pointer:fine){.swap:hover .main,.swap:focus-visible .main{opacity:0}.swap:hover .alt,.swap:focus-visible .alt{opacity:1}}
 
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}.reveal{opacity:1;transform:none}}
-    @media(max-width:760px){body{padding:20px 20px 30px;gap:16px}.site-title{font-size:27px}main{align-items:flex-start}.thank-you{padding:11vh 0 12vh}h1{font-size:clamp(56px,17vw,84px)}.lead{font-size:20px}.info{font-size:14px}.site-footer{padding-bottom:22px}}
-    @media(max-width:420px){body{padding:18px 18px 30px}.site-title{font-size:26px}.thank-you{padding:10vh 0 11vh}h1{font-size:clamp(52px,17vw,72px)}}
+    @media(max-width:760px){body{padding:20px 20px 30px;gap:16px}.site-title{font-size:27px}main{align-items:flex-start}.thank-you{padding:10vh 0 12vh}h1{font-size:clamp(56px,17vw,84px)}.lead{font-size:20px}.kicker{font-size:16px}.info{font-size:14px}.site-footer{padding-bottom:22px}}
+    @media(max-width:420px){body{padding:18px 18px 30px}.site-title{font-size:26px}.thank-you{padding:9vh 0 11vh}h1{font-size:clamp(52px,17vw,72px)}}
   </style>
 </head>
 <body>
@@ -58,15 +59,16 @@
 
   <main>
     <section class="thank-you reveal">
-      <div class="eyebrow">chosen family hat</div>
-      <h1>thank you for joining the family &lt;3</h1>
-      <p class="lead">your order is in.</p>
+      <div class="eyebrow">chosen family hat · order confirmed</div>
+      <h1>you rolled into the family &lt;3</h1>
+      <p class="lead">your hat is officially on the board.</p>
+      <p class="kicker">may your rolls be hot + your family chosen.</p>
       <div class="info">
         <p>keep an eye on your inbox for your payment receipt.</p>
         <p>we'll email you again when your hat ships with tracking.</p>
         <p>questions about your order? email <a href="mailto:hello@queerbackgammon.com">hello@queerbackgammon.com</a>.</p>
       </div>
-      <a class="home-link" href="../../">back to queer backgammon</a>
+      <a class="home-link" href="../../">back to the table</a>
     </section>
   </main>
 
