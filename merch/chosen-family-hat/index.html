@@ -32,10 +32,10 @@
     main{min-height:0;display:flex;align-items:center}
     .product{width:100%;display:grid;grid-template-columns:minmax(360px,500px) minmax(0,1fr);gap:clamp(42px,5vw,76px);align-items:center}
     .media-column,.details{min-width:0}
-    .carousel{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:var(--bg);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+    .carousel{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:var(--bg);touch-action:pan-y pinch-zoom;user-select:none;-webkit-user-select:none}
     .carousel-track{height:100%;display:flex;will-change:transform;transform:translate3d(0,0,0);transition:transform 1.65s cubic-bezier(.22,.61,.36,1)}
     .carousel-slide{flex:0 0 100%;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg)}
-    .carousel-slide img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;pointer-events:none;-webkit-user-drag:none;filter:saturate(1.11) contrast(1.06) brightness(1.025);transform:scale(1.055);will-change:transform,object-position}
+    .carousel-slide img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;pointer-events:none;-webkit-user-drag:none;filter:saturate(1.11) contrast(1.06) brightness(1.025);transform:scale(1.055);will-change:transform,object-position;backface-visibility:hidden;-webkit-backface-visibility:hidden}
     .carousel-slide:nth-child(1) img,.carousel-slide:nth-child(6) img{object-position:50% 48%}
     .carousel-slide:nth-child(2) img{object-position:50% 42%}
     .carousel-slide:nth-child(3) img{object-position:50% 44%}
@@ -231,6 +231,25 @@
       };
       carousel.addEventListener('pointerup',endDrag);
       carousel.addEventListener('pointercancel',endDrag);
+
+      if(!('PointerEvent' in window)){
+        carousel.addEventListener('touchstart',e=>{
+          if(e.target.closest('.carousel-arrow')||!e.touches[0])return;
+          stopForUser();dragging=true;startX=e.touches[0].clientX;dx=0;setTransition(false);
+        },{passive:true});
+        carousel.addEventListener('touchmove',e=>{
+          if(!dragging||!e.touches[0])return;
+          dx=e.touches[0].clientX-startX;
+          track.style.transform=`translate3d(calc(${-index*100}% + ${dx}px),0,0)`;
+        },{passive:true});
+        carousel.addEventListener('touchend',()=>{
+          if(!dragging)return;
+          dragging=false;
+          const threshold=carousel.clientWidth*.12;
+          if(Math.abs(dx)>threshold){dx<0?goNext():goPrev()}else{setTransition(true);paint()}
+          dx=0;
+        },{passive:true});
+      }
 
       if(fine){
         carousel.addEventListener('mouseenter',stop);
