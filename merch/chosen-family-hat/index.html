@@ -30,11 +30,16 @@
     .site-title span{display:block}
 
     main{min-height:0;display:flex;align-items:center}
-    .product{width:100%;display:grid;grid-template-columns:minmax(270px,360px) minmax(0,1fr);gap:clamp(48px,6vw,88px);align-items:center}
+    .product{width:100%;display:grid;grid-template-columns:minmax(320px,430px) minmax(0,1fr);gap:clamp(48px,5.5vw,82px);align-items:center}
     .media-column,.details{min-width:0}
-    .stage{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:transparent;cursor:pointer}
-    .stage video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center bottom;background:var(--bg);transition:transform .8s cubic-bezier(.16,1,.3,1),opacity .25s ease}
-    @media(hover:hover) and (pointer:fine){.stage.ready:hover video{transform:scale(1.004)}}
+    .carousel{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:transparent;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+    .carousel-track{height:100%;display:flex;will-change:transform;transform:translate3d(0,0,0);transition:transform 1.6s cubic-bezier(.22,.61,.36,1)}
+    .carousel-slide{flex:0 0 100%;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .carousel-slide img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;pointer-events:none;-webkit-user-drag:none}
+    .carousel-arrow{position:absolute;z-index:3;top:50%;width:34px;height:34px;margin-top:-17px;border:1px solid rgba(247,244,238,.22);border-radius:50%;background:rgba(0,47,167,.54);color:var(--white);display:grid;place-items:center;padding:0;font-size:16px;line-height:1;cursor:pointer;opacity:0;transform:translateY(3px);transition:opacity .22s ease,transform .22s ease,background .22s ease;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+    .carousel-arrow.prev{left:12px}.carousel-arrow.next{right:12px}
+    @media(hover:hover) and (pointer:fine){.carousel:hover .carousel-arrow,.carousel:focus-within .carousel-arrow{opacity:.88;transform:translateY(0)}.carousel-arrow:hover{opacity:1;background:rgba(0,47,167,.72)}}
+    @media(pointer:coarse){.carousel-arrow{opacity:.72;transform:none}}
 
     .details{max-width:620px}
     h1{margin:0;max-width:560px;font-size:clamp(54px,6vw,84px);line-height:.82;letter-spacing:-.08em;font-weight:950}
@@ -85,7 +90,7 @@
       .dice{display:none!important}
       .site-header{display:none}
       main{display:block;flex:0 0 auto;width:100%}.product{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
-      .media-column{width:100%;margin:0}.stage{width:100%;height:auto;aspect-ratio:.92/1}.stage video{object-fit:cover;object-position:center bottom}
+      .media-column{width:100%;margin:0}.carousel{width:100%;height:auto;aspect-ratio:1/1}
       .details{max-width:100%}h1{font-size:clamp(56px,16vw,82px);max-width:100%}.donation,.description,.credits{max-width:100%}
       .ambient-logo{right:-17vw;bottom:-4vw;width:min(78vw,390px);height:min(78vw,390px);opacity:.10}
       .donation{margin-top:19px}.description{margin-top:19px}.credits{margin-top:9px}
@@ -94,7 +99,7 @@
       .mobile-home{display:inline-block;margin-bottom:22px;font-size:15px;color:var(--white)}
     }
     @media(max-width:520px){
-      .product{gap:16px}.stage{aspect-ratio:.92/1}
+      .product{gap:16px}.carousel{aspect-ratio:1/1}
       h1{font-size:clamp(53px,16.3vw,74px)}.donation{font-size:clamp(28px,8.4vw,36px)}
       .buy-wrap{margin-top:22px}.buy{font-size:23px}.description p,.credits p{font-size:14px;line-height:1.45}.quantity-control button{font-size:21px}
       .site-footer{padding-top:58px}
@@ -111,9 +116,18 @@
 
   <main>
     <div class="product">
-      <section class="media-column reveal" aria-label="chosen family hat video">
-        <div class="stage" id="video-stage" role="button" tabindex="0" aria-label="pause hat video">
-          <video id="hat-video" autoplay muted loop playsinline preload="metadata" aria-label="chosen family hat rotating product video"><source src="chosen-family-hat.mp4" type="video/mp4"></video>
+      <section class="media-column reveal" aria-label="chosen family hat gallery">
+        <div class="carousel" id="hat-carousel" aria-roledescription="carousel" aria-label="chosen family hat photos">
+          <div class="carousel-track" id="carousel-track">
+            <div class="carousel-slide"><img src="gallery/hat-1.svg" alt="chosen family hat front embroidery outdoors"></div>
+            <div class="carousel-slide"><img src="gallery/hat-2.svg" alt="chosen family hat worn outdoors"></div>
+            <div class="carousel-slide"><img src="gallery/hat-3.svg" alt="chosen family hat back embroidery"></div>
+            <div class="carousel-slide"><img src="gallery/hat-4.svg" alt="chosen family hat at a backgammon picnic"></div>
+            <div class="carousel-slide"><img src="gallery/hat-5.svg" alt="chosen family hat among backgammon boards"></div>
+            <div class="carousel-slide" aria-hidden="true"><img src="gallery/hat-1.svg" alt=""></div>
+          </div>
+          <button class="carousel-arrow prev" id="carousel-prev" type="button" aria-label="previous photo">←</button>
+          <button class="carousel-arrow next" id="carousel-next" type="button" aria-label="next photo">→</button>
         </div>
       </section>
 
@@ -139,20 +153,64 @@
 
   <script>
   (()=>{
-    const root=document.documentElement,dice=document.getElementById('dice'),roll=document.getElementById('roll'),video=document.getElementById('hat-video'),stage=document.getElementById('video-stage'),fine=matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const root=document.documentElement,dice=document.getElementById('dice'),roll=document.getElementById('roll'),fine=matchMedia('(hover: hover) and (pointer: fine)').matches;
     if(roll)roll.textContent=String(Math.floor(Math.random()*6)+1);
     if(fine&&dice){root.classList.add('has-dice');addEventListener('pointermove',e=>{dice.style.left=e.clientX+'px';dice.style.top=e.clientY+'px'},{passive:true})}
-    if(video&&stage){
-      const sync=()=>stage.setAttribute('aria-label',video.paused?'play hat video':'pause hat video');
-      const play=async()=>{try{await video.play()}catch(e){}sync()};
-      const toggle=async()=>{if(video.paused)await play();else{video.pause();sync()}};
-      video.addEventListener('loadeddata',()=>{stage.classList.add('ready');play()});
-      video.addEventListener('canplay',()=>stage.classList.add('ready'));
-      video.addEventListener('play',sync);video.addEventListener('pause',sync);video.addEventListener('error',()=>stage.classList.remove('ready'));
-      stage.addEventListener('click',toggle);
-      stage.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}});
-      document.addEventListener('visibilitychange',()=>{if(document.hidden&&!video.paused){video.dataset.resume='1';video.pause()}else if(!document.hidden&&video.dataset.resume==='1'){delete video.dataset.resume;play()}});
-      sync();
+
+    const carousel=document.getElementById('hat-carousel'),track=document.getElementById('carousel-track'),prev=document.getElementById('carousel-prev'),next=document.getElementById('carousel-next');
+    if(carousel&&track&&prev&&next){
+      const count=5,reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let index=0,timer=null,dragging=false,startX=0,dx=0,resumeTimer=null;
+
+      const setTransition=on=>track.style.transition=on?'transform 1.6s cubic-bezier(.22,.61,.36,1)':'none';
+      const paint=()=>{track.style.transform=`translate3d(${-index*100}%,0,0)`};
+      const stop=()=>{if(timer){clearInterval(timer);timer=null}};
+      const start=()=>{stop();if(!reduced&&!document.hidden)timer=setInterval(()=>goNext(),7800)};
+      const restartLater=()=>{stop();clearTimeout(resumeTimer);resumeTimer=setTimeout(start,7000)};
+
+      const goNext=()=>{if(dragging)return;setTransition(true);index+=1;paint()};
+      const goPrev=()=>{
+        if(dragging)return;
+        if(index===0){
+          setTransition(false);index=count;paint();
+          requestAnimationFrame(()=>requestAnimationFrame(()=>{setTransition(true);index=count-1;paint()}));
+        }else{setTransition(true);index-=1;paint()}
+      };
+
+      track.addEventListener('transitionend',()=>{
+        if(index===count){setTransition(false);index=0;paint()}
+      });
+
+      next.addEventListener('click',()=>{goNext();restartLater()});
+      prev.addEventListener('click',()=>{goPrev();restartLater()});
+
+      carousel.addEventListener('pointerdown',e=>{
+        if(e.target.closest('.carousel-arrow'))return;
+        dragging=true;startX=e.clientX;dx=0;stop();setTransition(false);
+        carousel.setPointerCapture?.(e.pointerId);
+      });
+      carousel.addEventListener('pointermove',e=>{
+        if(!dragging)return;
+        dx=e.clientX-startX;
+        track.style.transform=`translate3d(calc(${-index*100}% + ${dx}px),0,0)`;
+      });
+      const endDrag=e=>{
+        if(!dragging)return;
+        dragging=false;
+        try{carousel.releasePointerCapture?.(e.pointerId)}catch(_){}
+        const threshold=carousel.clientWidth*.12;
+        if(Math.abs(dx)>threshold){dx<0?goNext():goPrev()}else{setTransition(true);paint()}
+        dx=0;restartLater();
+      };
+      carousel.addEventListener('pointerup',endDrag);
+      carousel.addEventListener('pointercancel',endDrag);
+
+      if(fine){
+        carousel.addEventListener('mouseenter',stop);
+        carousel.addEventListener('mouseleave',start);
+      }
+      document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
+      paint();start();
     }
     const links={1:'https://buy.stripe.com/7sY9ASfUZ4OX7um5qAbQY01',2:'https://buy.stripe.com/28E00igZ3dlt01U5qAbQY02',3:'https://buy.stripe.com/dRm28qgZ3ftB3e6g5ebQY03',4:'https://buy.stripe.com/7sY28q2496X5cOG3isbQY04',5:'https://buy.stripe.com/14A28qeQV5T19Cu6uEbQY05',6:'https://buy.stripe.com/6oU6oG4ch1CLbKC4mwbQY06',7:'https://buy.stripe.com/fZu00i249epx5mef1abQY07',8:'https://buy.stripe.com/4gM4gy105ftBdSKaKUbQY08',9:'https://buy.stripe.com/14AaEWbEJ6X515Y1akbQY09',10:'https://buy.stripe.com/3cIeVc38d2GP3e61akbQY0a'};
     let quantity=1;
