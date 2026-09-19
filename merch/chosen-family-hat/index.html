@@ -32,16 +32,29 @@
     main{min-height:0;display:flex;align-items:center}
     .product{width:100%;display:grid;grid-template-columns:minmax(360px,500px) minmax(0,1fr);gap:clamp(42px,5vw,76px);align-items:center}
     .media-column,.details{min-width:0}
-    .carousel{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:rgba(0,0,0,.035);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+    .carousel{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:var(--bg);touch-action:pan-y;user-select:none;-webkit-user-select:none}
     .carousel-track{height:100%;display:flex;will-change:transform;transform:translate3d(0,0,0);transition:transform 1.65s cubic-bezier(.22,.61,.36,1)}
-    .carousel-slide{flex:0 0 100%;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .carousel-slide img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;pointer-events:none;-webkit-user-drag:none;filter:saturate(1.11) contrast(1.06) brightness(1.025)}
-    .carousel-slide.pan img{object-fit:cover;object-position:12% center}
-    .carousel-slide.pan.is-active img{animation:widePan 18s ease-in-out infinite alternate}
-    @keyframes widePan{from{object-position:12% center}to{object-position:88% center}}
-    .carousel-arrow{position:absolute;z-index:3;top:50%;border:0;background:transparent;color:var(--white);padding:8px 6px;font-size:28px;font-weight:400;line-height:1;cursor:pointer;opacity:0;transform:translateY(-50%);transition:opacity .2s ease;text-shadow:0 1px 5px rgba(0,0,0,.28);pointer-events:none}
+    .carousel-slide{flex:0 0 100%;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg)}
+    .carousel-slide img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;pointer-events:none;-webkit-user-drag:none;filter:saturate(1.11) contrast(1.06) brightness(1.025);transform:scale(1.055);will-change:transform,object-position}
+    .carousel-slide:nth-child(1) img,.carousel-slide:nth-child(6) img{object-position:50% 48%}
+    .carousel-slide:nth-child(2) img{object-position:50% 42%}
+    .carousel-slide:nth-child(3) img{object-position:50% 44%}
+    .carousel-slide:nth-child(5) img{object-position:50% 46%}
+    .carousel-slide:nth-child(1).is-active img,.carousel-slide:nth-child(6).is-active img{animation:driftA 10s ease-in-out both}
+    .carousel-slide:nth-child(2).is-active img{animation:driftB 10s ease-in-out both}
+    .carousel-slide:nth-child(3).is-active img{animation:driftC 10s ease-in-out both}
+    .carousel-slide:nth-child(5).is-active img{animation:driftD 10s ease-in-out both}
+    .carousel-slide.pan img{object-fit:cover;object-position:10% center;transform:scale(1.02)}
+    .carousel-slide.pan.is-active img{animation:widePan 16s ease-in-out both}
+    .carousel.manual .carousel-slide img{animation:none!important}
+    @keyframes driftA{from{transform:scale(1.055) translate3d(0,0,0)}to{transform:scale(1.09) translate3d(-1.3%,.6%,0)}}
+    @keyframes driftB{from{transform:scale(1.055) translate3d(-.5%,0,0)}to{transform:scale(1.09) translate3d(1.2%,-.8%,0)}}
+    @keyframes driftC{from{transform:scale(1.055) translate3d(0,.5%,0)}to{transform:scale(1.085) translate3d(-1%,-.8%,0)}}
+    @keyframes driftD{from{transform:scale(1.055) translate3d(.5%,0,0)}to{transform:scale(1.09) translate3d(-1.2%,.7%,0)}}
+    @keyframes widePan{from{object-position:8% center}to{object-position:92% center}}
+    .carousel-arrow{position:absolute;z-index:3;top:50%;border:0;background:transparent;color:var(--white);padding:8px 6px;font-size:27px;font-weight:400;line-height:1;cursor:pointer;opacity:0;transform:translateY(-50%);transition:opacity .2s ease;text-shadow:0 1px 5px rgba(0,0,0,.22);pointer-events:none}
     .carousel-arrow.prev{left:8px}.carousel-arrow.next{right:8px}
-    @media(hover:hover) and (pointer:fine){.carousel:hover .carousel-arrow,.carousel:focus-within .carousel-arrow{opacity:.62;pointer-events:auto}.carousel-arrow:hover{opacity:.95}}
+    @media(hover:hover) and (pointer:fine){.carousel:hover .carousel-arrow,.carousel:focus-within .carousel-arrow{opacity:.48;pointer-events:auto}.carousel-arrow:hover{opacity:.82}}
     @media(pointer:coarse){.carousel-arrow{display:none}}
 
     .details{max-width:620px}
@@ -164,7 +177,7 @@
     const carousel=document.getElementById('hat-carousel'),track=document.getElementById('carousel-track'),prev=document.getElementById('carousel-prev'),next=document.getElementById('carousel-next');
     if(carousel&&track&&prev&&next){
       const count=5,reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let index=0,timer=null,dragging=false,startX=0,dx=0,resumeTimer=null;
+      let index=0,timer=null,dragging=false,startX=0,dx=0,manual=false;
 
       const slides=[...track.children];
       const setTransition=on=>track.style.transition=on?'transform 1.65s cubic-bezier(.22,.61,.36,1)':'none';
@@ -175,8 +188,11 @@
       };
       const paint=()=>{track.style.transform=`translate3d(${-index*100}%,0,0)`;setActive()};
       const stop=()=>{if(timer){clearInterval(timer);timer=null}};
-      const start=()=>{stop();if(!reduced&&!document.hidden)timer=setInterval(()=>goNext(),7800)};
-      const restartLater=()=>{stop();clearTimeout(resumeTimer);resumeTimer=setTimeout(start,7000)};
+      const start=()=>{stop();if(!manual&&!reduced&&!document.hidden)timer=setInterval(()=>goNext(),10000)};
+      const stopForUser=()=>{
+        if(manual)return;
+        manual=true;stop();carousel.classList.add('manual');
+      };
 
       const goNext=()=>{if(dragging)return;setTransition(true);index+=1;paint()};
       const goPrev=()=>{
@@ -191,12 +207,13 @@
         if(index===count){setTransition(false);index=0;paint()}
       });
 
-      next.addEventListener('click',()=>{goNext();restartLater()});
-      prev.addEventListener('click',()=>{goPrev();restartLater()});
+      next.addEventListener('click',()=>{stopForUser();goNext()});
+      prev.addEventListener('click',()=>{stopForUser();goPrev()});
 
       carousel.addEventListener('pointerdown',e=>{
         if(e.target.closest('.carousel-arrow'))return;
-        dragging=true;startX=e.clientX;dx=0;stop();setTransition(false);
+        stopForUser();
+        dragging=true;startX=e.clientX;dx=0;setTransition(false);
         carousel.setPointerCapture?.(e.pointerId);
       });
       carousel.addEventListener('pointermove',e=>{
@@ -210,14 +227,14 @@
         try{carousel.releasePointerCapture?.(e.pointerId)}catch(_){}
         const threshold=carousel.clientWidth*.12;
         if(Math.abs(dx)>threshold){dx<0?goNext():goPrev()}else{setTransition(true);paint()}
-        dx=0;restartLater();
+        dx=0;
       };
       carousel.addEventListener('pointerup',endDrag);
       carousel.addEventListener('pointercancel',endDrag);
 
       if(fine){
         carousel.addEventListener('mouseenter',stop);
-        carousel.addEventListener('mouseleave',start);
+        carousel.addEventListener('mouseleave',()=>{if(!manual)start()});
       }
       document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
       paint();start();
