@@ -36,6 +36,8 @@
     .kicker{margin:11px 0 0;max-width:650px;color:var(--soft);font-size:17px;line-height:1.28}
     .info{margin-top:31px;max-width:560px;color:var(--soft);font-size:15px;line-height:1.42}
     .info p{margin:7px 0}
+    .info .order-no{color:var(--white)}
+    .info .order-no[hidden]{display:none}
     @media(min-width:900px){.lead{white-space:nowrap}}
 
     .site-footer{align-self:end;color:var(--soft);font-size:12px;line-height:1.3}
@@ -64,9 +66,10 @@
       <p class="lead">your hat is on her way to you, and all profits are headed to Black Trans Liberation Kitchen.</p>
       <p class="kicker">may your rolls be doubles + your family chosen.</p>
       <div class="info">
-        <p>keep an eye on your inbox for your payment receipt.</p>
-        <p>we'll email you again when your hat ships.</p>
-        <p>questions about your order? email <a href="mailto:hello@queerbackgammon.com">hello@queerbackgammon.com</a>.</p>
+        <p class="order-no" id="order-no" hidden>your order number: <span id="order-id"></span></p>
+        <p>we got your order. a payment receipt from Stripe is on its way to your inbox (check spam if you don't see it).</p>
+        <p>you'll get another email with tracking as soon as your hat ships.</p>
+        <p>questions about your order? email <a href="mailto:hello@queerbackgammon.com">hello@queerbackgammon.com</a> with your order number.</p>
       </div>
     </section>
   </main>
@@ -77,5 +80,6 @@
   </footer>
 
   <script>document.getElementById('roll').textContent=String(Math.floor(Math.random()*6)+1);</script>
+  <script>(function(){try{var s=new URLSearchParams(location.search).get('session_id')||'';if(/^cs_[A-Za-z0-9_]{8,}$/.test(s)){document.getElementById('order-id').textContent='QB-'+s.slice(-8).toUpperCase();document.getElementById('order-no').hidden=false;}}catch(e){}})();</script>
 </body>
 </html>
